@@ -118,9 +118,9 @@ public class View2 {
 		JComboBox cbType = new JComboBox();
 		cbType.setBounds(199, 38, 123, 27);
 		talismanPanel.add(cbType);
-		cbType.setModel(new DefaultComboBoxModel(tailsman.tType.values()));
+		cbType.setModel(new DefaultComboBoxModel(talisman.tType.values()));
 		
-		tailsman tsm = new tailsman();
+		talisman tsm = new talisman();
 		
 		JAutoCompleteComboBox cbSkill1 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill1 = new JComboBox();
@@ -212,7 +212,7 @@ public class View2 {
 				
 				int slot = cbSlot.getSelectedIndex();
 				
-				tailsman.addTailsman(typeCode, sk1Code, sk2Code, sk1Num, sk2Num, slot);		
+				talisman.addTailsman(typeCode, sk1Code, sk2Code, sk1Num, sk2Num, slot);		
 				
 			}
 		});

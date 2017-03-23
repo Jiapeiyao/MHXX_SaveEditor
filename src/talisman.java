@@ -2,7 +2,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-public class tailsman {
+public class talisman {
 	private String[] lines;
 	public tailsmanSkill[] ts = new tailsmanSkill[204];
 	private String skill_limits_mhxx = "0 = なし			: : : : : : : : : :\n"
@@ -209,7 +209,7 @@ public class tailsman {
 			+ "201 = 对霞龙		: : : : : 0~0 | -3~3 : : : : :\n"
 			+ "202 = 对炎龙		: : : : : 0~0 | -3~3 : : : : :\n"
 			+ "203 = 胴系统倍加?	: : : : : : : : : :\n";
-	public tailsman(){
+	public talisman(){
 		parseSkills();
 	}
 	
@@ -369,7 +369,7 @@ public class tailsman {
 //	            System.out.print(out+"\n");
 //	        }
 //	    }
-		tailsman t = new tailsman();
+		talisman t = new talisman();
 		t.parseSkills();
 	}
 
