@@ -10,16 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class View2 {
@@ -87,8 +83,9 @@ public class View2 {
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					f.setDialogTitle("保存存档文件");
-					int openResult = f.showOpenDialog(null);
+					//f.setDialogTitle("保存存档文件");
+					f.setDialogType(JFileChooser.SAVE_DIALOG);
+					int openResult = f.showDialog(null, "保存存档文件");
 					if (openResult == JFileChooser.APPROVE_OPTION) {
 						File file = f.getSelectedFile();
 						FileOutputStream out = new FileOutputStream(file.getPath());
@@ -96,9 +93,10 @@ public class View2 {
 					    out.close();
 						
 					}
+					JOptionPane.showMessageDialog(null, "已保存");
 					
 				}catch(Exception exc){
-					JOptionPane.showMessageDialog(null, "请加载正确的存档文件System");
+					JOptionPane.showMessageDialog(null, "保存失败");
 				}
 			}
 		});
