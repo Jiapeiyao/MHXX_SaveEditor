@@ -70,21 +70,11 @@ public class View1 {
 						File file = f.getSelectedFile();
 						FileInputStream in = new FileInputStream(file.getPath());
 						in.read(Main.buffer);
-						//System.out.print(String.format("%02X", buffer[16 * 231831]));
 					    in.close();
-					    //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
-					    //System.out.println(Main.user1offset);
 					    Main.equipmentBoxOffset = 1230690 - Main.user1offset;
-					    //System.out.println(Main.equipmentBoxOffset);
-//					    for (int i=0; i<72; i++){
-//					    	if (i%16==0) System.out.println("");
-//					    	System.out.print(Main.buffer[Main.user1offset + Main.equipmentBoxOffset + i - 36]);
-//					    	System.out.print(" ");
-//					    }
 					    frame.setVisible(false);
 					    View2 v = new View2();
-					    v.setVisible(true);
 					    //System.exit(0);
 						
 					}

@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class talisman {
 	private String[] lines;
-	public tailsmanSkill[] ts = new tailsmanSkill[204];
+	public talismanSkill[] ts = new talismanSkill[204];
 	private String skill_limits_mhxx = "0 = なし			: : : : : : : : : :\n"
 			+ "1 = 毒			: 1~5 | 0~0 : : 1~5 | -10~7 : : 0~0 | 0~0 : : : : :\n"
 			+ "2 = 麻痺			: 1~5 | 0~0 : : 1~5 | -10~7 : : 0~0 | 0~0 : : : : :\n"
@@ -292,11 +292,11 @@ public class talisman {
 	    }
 	}
 	
-	public class tailsmanSkill {
+	public class talismanSkill {
 		public String skill;
 		public int number;
 		
-		public tailsmanSkill(String skill, int number){
+		public talismanSkill(String skill, int number){
 			this.skill = skill;
 			this.number = number;
 		}
@@ -322,12 +322,12 @@ public class talisman {
 		lines = skill_limits_mhxx.split("\n");
 		for (int i=0; i<204; i++){
 			String[] tmp = lines[i].split("\\s");
-			ts[i] = new tailsmanSkill(tmp[2], Integer.parseInt(tmp[0]));
+			ts[i] = new talismanSkill(tmp[2], Integer.parseInt(tmp[0]));
 			//System.out.print(tmp[2] + ", " + Integer.parseInt(tmp[0])+"\n");
 		}
 	}
 	
-	public static void addTailsman(int typeCode, int sk1Code, int sk2Code, int sk1Num, int sk2Num, int slot){
+	public static void addtalisman(int typeCode, int sk1Code, int sk2Code, int sk1Num, int sk2Num, int slot){
 		if (Main.emptySpaceInEquipBoxOffset >= 72000){
 			JOptionPane.showMessageDialog(null, "添加失败，您的箱子可能已满");
 			return;
@@ -358,8 +358,8 @@ public class talisman {
 	}
 		
 	
-	public static void main(String [ ] args)
-	{
+//	public static void main(String [ ] args)
+//	{
 //		String reg = "[0-9]+\\s*=\\s*+\\S+.*";
 //		String str = "2 = 麻痺			: 1~5 | 0~0 : : 1~5 | -10~7 : : 0~0 | 0~0 : : : : :";
 //		System.out.print(Pattern.matches(reg, str));
@@ -369,8 +369,8 @@ public class talisman {
 //	            System.out.print(out+"\n");
 //	        }
 //	    }
-		talisman t = new talisman();
-		t.parseSkills();
-	}
+//		talisman t = new talisman();
+//		t.parseSkills();
+//	}
 
 }
