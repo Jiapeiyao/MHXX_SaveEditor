@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
+import javax.swing.UIManager;
 
 public class View1 {
 	
@@ -45,7 +47,7 @@ public class View1 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("MHXX Save Editor by Mononoke");
 		frame.getContentPane().setLayout(null);
 		
@@ -54,9 +56,9 @@ public class View1 {
 		lblWelcome.setVisible(false);
 		frame.getContentPane().add(lblWelcome);
 		
-		JLabel lblStatement = new JLabel("请适当使用，合理修改");
+		JLabel lblStatement = new JLabel("请备份存档，妥善保存");
 		lblStatement.setBounds(160, 100, 130, 16);
-		lblStatement.setVisible(false);
+		lblStatement.setVisible(true);
 		frame.getContentPane().add(lblStatement);
 		
 		JButton btnLoad = new JButton("加载存档");
@@ -84,7 +86,11 @@ public class View1 {
 		});
 		btnLoad.setBounds(166, 128, 117, 29);
 		frame.getContentPane().add(btnLoad);
-	
+//		JTextPane textPane = new JTextPane();
+//		textPane.setBackground(UIManager.getColor("Panel.background"));
+//		textPane.setText("幻化功能使用说明：\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行； \n2. 可以幻化二名DLC等防具，射手剑士互通；\n3. 此幻化后偶数位的防具还在；\n4. 同一系列的防具幻化效果相同（例：麒麟S射手胴可以将所有部位防具幻化成麒麟S射手");
+//		textPane.setBounds(19, 163, 397, 87);
+//		frame.getContentPane().add(textPane);
 	}
 
 

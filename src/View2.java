@@ -58,7 +58,7 @@ public class View2 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("MHXX Save Editor by Mononoke");
 		frame.setVisible(true);
 		
@@ -262,7 +262,7 @@ public class View2 {
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setBackground(UIManager.getColor("Panel.background"));
-		textPane.setText("使用说明：\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行； \n2. 可以幻化二名DLC等防具，射手剑士互通；\n3. 此幻化后偶数位的防具还在；");
+		textPane.setText("使用说明\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行；\n2. 可以幻化二名DLC等防具，射手剑士装可以互相幻化；\n3. 此幻化后，偶数位的防具还在。");
 		textPane.setBounds(19, 163, 397, 87);
 		visionPanel.add(textPane);
 		
