@@ -45,7 +45,7 @@ public class View1 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setTitle("MHXX Save Editor by Mononoke");
 		frame.getContentPane().setLayout(null);
 		
@@ -71,17 +71,15 @@ public class View1 {
 						FileInputStream in = new FileInputStream(file.getPath());
 						in.read(Main.buffer);
 					    in.close();
-					    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
-					    Main.equipmentBoxOffset = 1230690 - Main.user1offset;
-					    frame.setVisible(false);
-					    View2 v = new View2();
-					    //System.exit(0);
-						
 					}
-					
 				}catch(Exception exc){
 					JOptionPane.showMessageDialog(null, "请加载正确的存档文件System");
 				}
+			    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
+			    Main.equipmentBoxOffset = 1230690 - Main.user1offset;
+			    frame.setVisible(false);
+			    View2 v = new View2();
+			    //System.exit(0);
 			}
 		});
 		btnLoad.setBounds(166, 128, 117, 29);

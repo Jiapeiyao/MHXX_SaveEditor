@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -57,36 +58,45 @@ public class View2 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setTitle("MHXX Save Editor by Mononoke");
 		frame.setVisible(true);
 		
 		JToolBar toolBar = new JToolBar();
+		CardLayout cards = new CardLayout();
 		frame.getContentPane().add(toolBar, BorderLayout.NORTH);
 		
+		JPanel container = new JPanel(cards);
 		JPanel otherPanel = new JPanel();
 		JPanel itemPanel = new JPanel();
 		JPanel weaponPanel = new JPanel();
 		JPanel equipmentPanel = new JPanel();
 		JPanel visionPanel = new JPanel();		
 		JPanel talismanPanel = new JPanel();
-		frame.getContentPane().add(talismanPanel, BorderLayout.CENTER);
-		frame.getContentPane().add(visionPanel, BorderLayout.CENTER);
+		container.add(otherPanel, "other");
+		container.add(itemPanel, "item");
+		container.add(weaponPanel, "weapon");
+		container.add(equipmentPanel, "equipment");
+		container.add(visionPanel, "vision");
+		container.add(talismanPanel, "talisman");
+		cards.show(container, "vision");
+		frame.getContentPane().add(container, BorderLayout.CENTER);
+//		frame.getContentPane().add(talismanPanel, BorderLayout.CENTER);
+//		frame.getContentPane().add(visionPanel, BorderLayout.CENTER);
 		visionPanel.setLayout(null);
-		frame.getContentPane().add(otherPanel, BorderLayout.CENTER);
-		frame.getContentPane().add(itemPanel, BorderLayout.CENTER);
-		frame.getContentPane().add(weaponPanel, BorderLayout.CENTER);
-		frame.getContentPane().add(equipmentPanel, BorderLayout.CENTER);
+//		frame.getContentPane().add(otherPanel, BorderLayout.CENTER);
+//		frame.getContentPane().add(itemPanel, BorderLayout.CENTER);
+//		frame.getContentPane().add(weaponPanel, BorderLayout.CENTER);
+//		frame.getContentPane().add(equipmentPanel, BorderLayout.CENTER);
 		talismanPanel.setLayout(null);
 		
-		talismanPanel.setVisible(false);
-		otherPanel.setVisible(false);
-		itemPanel.setVisible(false);
-		weaponPanel.setVisible(false);
-		equipmentPanel.setVisible(false);
-		visionPanel.setVisible(false);
-		currentPanel = visionPanel;
-		currentPanel.setVisible(true);
+//		talismanPanel.setVisible(false);
+//		otherPanel.setVisible(false);
+//		itemPanel.setVisible(false);
+//		weaponPanel.setVisible(false);
+//		equipmentPanel.setVisible(false);
+//		visionPanel.setVisible(false);
+//		visionPanel.setVisible(true);
 		
 		talisman tsm = new talisman();
 		JButton button_0 = new JButton("综合");
@@ -108,19 +118,15 @@ public class View2 {
 		JButton button_6 = new JButton("幻化");
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentPanel.setVisible(false);
-				currentPanel = visionPanel;
-				currentPanel.setVisible(true);
+				cards.show(container, "vision");
 			}
 		});
 		toolBar.add(button_6);
 		
 		JButton button_4 = new JButton("护石");
-		button_6.addActionListener(new ActionListener() {
+		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				currentPanel.setVisible(false);
-				currentPanel = talismanPanel;
-				currentPanel.setVisible(true);
+				cards.show(container, "talisman");
 			}
 		});
 		toolBar.add(button_4);
@@ -170,12 +176,18 @@ public class View2 {
 		txtSkill1Num = new JComboBox();
 		txtSkill1Num.setBounds(295, 76, 78, 26);
 		talismanPanel.add(txtSkill1Num);
+		for (int i=14; i>=-10; i--){
+			txtSkill1Num.addItem(i);
+		}
 		txtSkill1Num.setSelectedIndex(14);
 		
 				
 		txtSkill2Num = new JComboBox();
 		txtSkill2Num.setBounds(295, 115, 78, 26);
 		talismanPanel.add(txtSkill2Num);
+		for (int i=14; i>=-10; i--){
+			txtSkill2Num.addItem(i);
+		}
 		txtSkill2Num.setSelectedIndex(14);
 		
 		
@@ -188,12 +200,6 @@ public class View2 {
 		}
 		for (int i=0; i<204; i++){
 			cbSkill2.addItem(tsm.ts[i]);
-		}
-		for (int i=14; i>=-10; i--){
-			txtSkill1Num.addItem(i);
-		}
-		for (int i=14; i>=-10; i--){
-			txtSkill2Num.addItem(i);
 		}
 		for (int i=0; i<4; i++){
 			cbSlot.addItem(i);
