@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
-import javax.swing.UIManager;
 
 public class View1 {
 	
@@ -80,17 +78,11 @@ public class View1 {
 			    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
 			    Main.equipmentBoxOffset = 1230690 - Main.user1offset;
 			    frame.setVisible(false);
-			    View2 v = new View2();
-			    //System.exit(0);
+			    View2.main();
 			}
 		});
 		btnLoad.setBounds(166, 128, 117, 29);
 		frame.getContentPane().add(btnLoad);
-//		JTextPane textPane = new JTextPane();
-//		textPane.setBackground(UIManager.getColor("Panel.background"));
-//		textPane.setText("幻化功能使用说明：\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行； \n2. 可以幻化二名DLC等防具，射手剑士互通；\n3. 此幻化后偶数位的防具还在；\n4. 同一系列的防具幻化效果相同（例：麒麟S射手胴可以将所有部位防具幻化成麒麟S射手");
-//		textPane.setBounds(19, 163, 397, 87);
-//		frame.getContentPane().add(textPane);
 	}
 
 

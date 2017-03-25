@@ -7,11 +7,11 @@ public class Main {
 	public static int user3offset;
 	public static int equipmentBoxOffset;
 	public static int emptySpaceInEquipBoxOffset = 0;
+	public static int useroffset;
 
 	public static void main(String [ ] args)
 	{
-		View1 v = new View1();
-		v.main();
+		View1.main();
 	}
 }
 

@@ -18,16 +18,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
-import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
+import javax.swing.JRadioButton;
+import java.awt.Font;
+import javax.swing.ButtonGroup;
 
 public class View2 {
 
 	private JFrame frame;
-	private JPanel currentPanel;
-	private JComboBox txtSkill1Num;
-	private JComboBox txtSkill2Num;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -81,22 +81,9 @@ public class View2 {
 		container.add(talismanPanel, "talisman");
 		cards.show(container, "vision");
 		frame.getContentPane().add(container, BorderLayout.CENTER);
-//		frame.getContentPane().add(talismanPanel, BorderLayout.CENTER);
-//		frame.getContentPane().add(visionPanel, BorderLayout.CENTER);
 		visionPanel.setLayout(null);
-//		frame.getContentPane().add(otherPanel, BorderLayout.CENTER);
-//		frame.getContentPane().add(itemPanel, BorderLayout.CENTER);
-//		frame.getContentPane().add(weaponPanel, BorderLayout.CENTER);
-//		frame.getContentPane().add(equipmentPanel, BorderLayout.CENTER);
 		talismanPanel.setLayout(null);
 		
-//		talismanPanel.setVisible(false);
-//		otherPanel.setVisible(false);
-//		itemPanel.setVisible(false);
-//		weaponPanel.setVisible(false);
-//		equipmentPanel.setVisible(false);
-//		visionPanel.setVisible(false);
-//		visionPanel.setVisible(true);
 		
 		talisman tsm = new talisman();
 		JButton button_0 = new JButton("综合");
@@ -156,6 +143,40 @@ public class View2 {
 		toolBar.add(button_5);
 		
 		
+		//UserX Radio Buttons
+		JRadioButton rdbtnUser_1 = new JRadioButton("User1");
+		rdbtnUser_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.useroffset = Main.user1offset;
+			}
+		});
+		buttonGroup.add(rdbtnUser_1);
+		rdbtnUser_1.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		toolBar.add(rdbtnUser_1);
+		
+		JRadioButton rdbtnUser_2 = new JRadioButton("User2");
+		rdbtnUser_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.useroffset = Main.user2offset;
+			}
+		});
+		buttonGroup.add(rdbtnUser_2);
+		rdbtnUser_2.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		toolBar.add(rdbtnUser_2);
+		
+		JRadioButton rdbtnUser_3 = new JRadioButton("User3");
+		rdbtnUser_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.useroffset = Main.user3offset;
+			}
+		});
+		buttonGroup.add(rdbtnUser_3);
+		rdbtnUser_3.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		toolBar.add(rdbtnUser_3);
+		
+		rdbtnUser_1.setSelected(true);
+		
+		
 		//Talisman
 		//JAutoCompleteComboBox cbType = new JAutoCompleteComboBox();
 		JComboBox cbType = new JComboBox();
@@ -173,7 +194,7 @@ public class View2 {
 		cbSkill2.setBounds(148, 116, 123, 27);
 		talismanPanel.add(cbSkill2);
 		
-		txtSkill1Num = new JComboBox();
+		JComboBox txtSkill1Num = new JComboBox();
 		txtSkill1Num.setBounds(295, 76, 78, 26);
 		talismanPanel.add(txtSkill1Num);
 		for (int i=14; i>=-10; i--){
@@ -182,7 +203,7 @@ public class View2 {
 		txtSkill1Num.setSelectedIndex(14);
 		
 				
-		txtSkill2Num = new JComboBox();
+		JComboBox txtSkill2Num = new JComboBox();
 		txtSkill2Num.setBounds(295, 115, 78, 26);
 		talismanPanel.add(txtSkill2Num);
 		for (int i=14; i>=-10; i--){
@@ -269,17 +290,14 @@ public class View2 {
 		JButton vision1 = new JButton("将第1格防具幻化为第2格防具的外形");
 		vision1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset] % 32;
-				int equipment2Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 36] % 32;
+				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset] % 32;
+				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 36] % 32;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
-//				} else if (equipment1Type != equipment2Type) {
-//					JOptionPane.showMessageDialog(null, "失败！防具部位不同");
-//					return;
 				} else {
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 4] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 36 + 2];
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 5] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 36 + 3];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 4] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 36 + 2];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 5] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 36 + 3];
 					JOptionPane.showMessageDialog(null, "幻化成功");
 					return;
 				}
@@ -291,17 +309,14 @@ public class View2 {
 		JButton vision2 = new JButton("将第3格防具幻化为第4格防具的外形");
 		vision2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 72] % 32;
-				int equipment2Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 108] % 32;
+				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 72] % 32;
+				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 108] % 32;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
-//				} else if (equipment1Type != equipment2Type) {
-//					JOptionPane.showMessageDialog(null, "失败！防具部位不同");
-//					return;
 				} else {
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 72 + 4] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 108 + 2];
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 72 + 5] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 108 + 3];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 72 + 4] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 108 + 2];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 72 + 5] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 108 + 3];
 					JOptionPane.showMessageDialog(null, "幻化成功");
 					return;
 				}
@@ -313,17 +328,14 @@ public class View2 {
 		JButton vision3 = new JButton("将第5格防具幻化为第6格防具的外形");
 		vision3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 144] % 32;
-				int equipment2Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 160] % 32;
+				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144] % 32;
+				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 160] % 32;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
-//				} else if (equipment1Type != equipment2Type) {
-//					JOptionPane.showMessageDialog(null, "失败！防具部位不同");
-//					return;
 				} else {
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 144 + 4] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 180 + 2];
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 144 + 5] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 180 + 3];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144 + 4] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 180 + 2];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144 + 5] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 180 + 3];
 					JOptionPane.showMessageDialog(null, "幻化成功");
 					return;
 				}
@@ -335,17 +347,14 @@ public class View2 {
 		JButton vision4 = new JButton("将第7格防具幻化为第8格防具的外形");
 		vision4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 216] % 32;
-				int equipment2Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 252] % 32;
+				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 216] % 32;
+				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 252] % 32;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
-//				} else if (equipment1Type != equipment2Type) {
-//					JOptionPane.showMessageDialog(null, "失败！防具部位不同");
-//					return;
 				} else {
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 216 + 4] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 252 + 2];
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 216 + 5] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 252 + 3];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 216 + 4] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 252 + 2];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 216 + 5] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 252 + 3];
 					JOptionPane.showMessageDialog(null, "幻化成功");
 					return;
 				}
@@ -357,17 +366,14 @@ public class View2 {
 		JButton vision5 = new JButton("将第9格防具幻化为第10格防具的外形");
 		vision5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 288] % 32;
-				int equipment2Type = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 324] % 32;
+				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 288] % 32;
+				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 324] % 32;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
-//				} else if (equipment1Type != equipment2Type) {
-//					JOptionPane.showMessageDialog(null, "失败！防具部位不同");
-//					return;
 				} else {
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 288 + 4] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 324 + 2];
-					Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 288 + 5] = Main.buffer[Main.user1offset + Main.equipmentBoxOffset + 324 + 3];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 288 + 4] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 324 + 2];
+					Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 288 + 5] = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 324 + 3];
 					JOptionPane.showMessageDialog(null, "幻化成功");
 					return;
 				}
