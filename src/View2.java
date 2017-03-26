@@ -222,6 +222,11 @@ public class View2 {
 					if (item.addItemToBox(itemId, itemNum)) {
 						JOptionPane.showMessageDialog(null, "添加成功！");
 					}
+//					item.itemBox = new item.itemSpace[2300];
+//					item.emptySpaceInItemBox = 0;
+//					for (int i=0; i<2300; i++){
+//						item.itemBox[i] = new item.itemSpace(i, 1);
+//					}
 					item.rewriteItemBox();
 				}
 			}
