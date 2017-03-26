@@ -430,6 +430,10 @@ public class View2 {
 			public void actionPerformed(ActionEvent e) {
 				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset] % 32;
 				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 36] % 32;
+				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
+				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
+				System.out.println(equipment1Type);
+				System.out.println(equipment2Type);
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
@@ -449,6 +453,8 @@ public class View2 {
 			public void actionPerformed(ActionEvent e) {
 				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 72] % 32;
 				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 108] % 32;
+				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
+				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
@@ -468,6 +474,8 @@ public class View2 {
 			public void actionPerformed(ActionEvent e) {
 				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144] % 32;
 				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 160] % 32;
+				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
+				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
@@ -487,6 +495,8 @@ public class View2 {
 			public void actionPerformed(ActionEvent e) {
 				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 216] % 32;
 				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 252] % 32;
+				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
+				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
@@ -506,6 +516,8 @@ public class View2 {
 			public void actionPerformed(ActionEvent e) {
 				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 288] % 32;
 				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 324] % 32;
+				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
+				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
