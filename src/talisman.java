@@ -1,5 +1,7 @@
+
 import java.util.regex.Pattern;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class talisman {
@@ -292,9 +294,19 @@ public class talisman {
 	    }
 	}
 	
+	public class range {
+		int min;
+		int max;
+		public range(int min, int max){
+			this.min = min;
+			this.max = max;
+		}
+	} 
+	
 	public class talismanSkill {
 		public String skill;
 		public int number;
+		range[] skill1_limit = new range[4]; 
 		
 		public talismanSkill(String skill, int number){
 			this.skill = skill;
@@ -327,9 +339,20 @@ public class talisman {
 		}
 	}
 	
+//	public void parseSkills_v2(){
+//		JFileChooser f = new JFileChooser();
+//		try {
+//			FileInputStream in = new FileInputStream(file.getPath());
+//			in.read(Main.buffer);
+//			in.close();
+//		}catch(Exception exc){
+//			JOptionPane.showMessageDialog(null, "请加载正确的存档文件System");
+//		}
+//	}
+	
 	public static void addtalisman(int typeCode, int sk1Code, int sk2Code, int sk1Num, int sk2Num, int slot){
 		if (Main.emptySpaceInEquipBoxOffset >= 72000){
-			JOptionPane.showMessageDialog(null, "添加失败，您的箱子可能已满");
+			JOptionPane.showMessageDialog(null, "添加失败，您的装备箱可能已满");
 			return;
 		}
 		int emptySpaceOffset = findEmptySpace();

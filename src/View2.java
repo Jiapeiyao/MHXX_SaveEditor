@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +25,8 @@ import javax.swing.UIManager;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.ButtonGroup;
+import javax.swing.JTextField;
+import javax.swing.JFormattedTextField;
 
 public class View2 {
 
@@ -57,9 +61,9 @@ public class View2 {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, Main.windowWidth, Main.windowHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("MHXX Save Editor by Mononoke");
+		frame.setTitle("MHXX存档修改器 by Mononoke");
 		frame.setVisible(true);
 		
 		JToolBar toolBar = new JToolBar();
@@ -75,6 +79,7 @@ public class View2 {
 		JPanel talismanPanel = new JPanel();
 		container.add(otherPanel, "other");
 		container.add(itemPanel, "item");
+		itemPanel.setLayout(null);
 		container.add(weaponPanel, "weapon");
 		container.add(equipmentPanel, "equipment");
 		container.add(visionPanel, "vision");
@@ -91,7 +96,12 @@ public class View2 {
 		toolBar.add(button_0);
 		
 		JButton button_1 = new JButton("物品");
-		button_1.setEnabled(false);
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cards.show(container, "item");
+				item.getItemBox();
+			}
+		});
 		toolBar.add(button_1);
 		
 		JButton button_2 = new JButton("武器");
@@ -148,6 +158,7 @@ public class View2 {
 		rdbtnUser_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user1offset;
+				item.getItemBox();
 			}
 		});
 		buttonGroup.add(rdbtnUser_1);
@@ -158,6 +169,7 @@ public class View2 {
 		rdbtnUser_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user2offset;
+				item.getItemBox();
 			}
 		});
 		buttonGroup.add(rdbtnUser_2);
@@ -168,6 +180,7 @@ public class View2 {
 		rdbtnUser_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user3offset;
+				item.getItemBox();
 			}
 		});
 		buttonGroup.add(rdbtnUser_3);
@@ -176,8 +189,126 @@ public class View2 {
 		
 		rdbtnUser_1.setSelected(true);
 		
+		//<--------item Panel--------->//
+		JAutoCompleteComboBox cbItems = new JAutoCompleteComboBox();
+		cbItems.setBounds(48, 31, 225, 26);
+		itemPanel.add(cbItems);
+		item.parseItemList();
+		cbItems.addItem("(选择物品)");
+		for (int i=0; i<item.itemList.length; i++)
+			cbItems.addItem(item.itemList[i]);
 		
-		//Talisman
+		JTextField tf_itemNum = new JTextField();
+		tf_itemNum.setBounds(295, 31, 85, 26);
+		tf_itemNum.setText("0");
+		tf_itemNum.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+		          //getToolkit().beep();
+		          e.consume();
+		        }
+		      }
+		    });
+		itemPanel.add(tf_itemNum);
+		
+		JButton btn_add_item = new JButton("添加物品");
+		btn_add_item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int itemId = cbItems.getSelectedIndex();
+				System.out.print(itemId);
+				int itemNum = Integer.parseInt(tf_itemNum.getText());
+				if (itemId!=0 && itemNum!=0){
+					if (item.addItemToBox(itemId, itemNum)) {
+						JOptionPane.showMessageDialog(null, "添加成功！");
+					}
+					item.rewriteItemBox();
+				}
+			}
+		});
+		btn_add_item.setBounds(166, 77, 117, 29);
+		itemPanel.add(btn_add_item);
+		
+		JButton btn_DashG = new JButton("强走药Gx99");
+		btn_DashG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(16, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btn_DashG.setBounds(48, 154, 117, 29);
+		itemPanel.add(btn_DashG);
+		
+		JButton btn_MaxPotion = new JButton("秘药x99");
+		btn_MaxPotion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(28, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btn_MaxPotion.setBounds(166, 154, 117, 29);
+		itemPanel.add(btn_MaxPotion);
+		
+		JButton btn_AnciPotion = new JButton("古代秘药x99");
+		btn_AnciPotion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(29, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btn_AnciPotion.setBounds(284, 154, 117, 29);
+		itemPanel.add(btn_AnciPotion);
+		
+		JButton btn_DemonG = new JButton("鬼人药Gx99");
+		btn_DemonG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(18, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btn_DemonG.setBounds(48, 184, 117, 29);
+		itemPanel.add(btn_DemonG);
+		
+		JButton btn_LifeDustG = new JButton("生命大粉尘x99");
+		btn_LifeDustG.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(32, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btn_LifeDustG.setBounds(166, 184, 117, 29);
+		itemPanel.add(btn_LifeDustG);
+		
+		JButton btnx = new JButton("素材玉x99");
+		btnx.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(69, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnx.setBounds(284, 184, 117, 29);
+		itemPanel.add(btnx);
+		
+		JLabel label = new JLabel("快速添加物品：");
+		label.setBounds(56, 133, 117, 16);
+		itemPanel.add(label);
+
+		
+		
+				
+		//<--------Talisman Panel-------->//
 		//JAutoCompleteComboBox cbType = new JAutoCompleteComboBox();
 		JComboBox cbType = new JComboBox();
 		cbType.setBounds(199, 38, 123, 27);
@@ -281,6 +412,8 @@ public class View2 {
 		btnAddtalisman.setBounds(256, 193, 117, 29);
 		talismanPanel.add(btnAddtalisman);
 		
+		
+		//<--------------vision Panel---------------->//
 		JTextPane textPane = new JTextPane();
 		textPane.setBackground(UIManager.getColor("Panel.background"));
 		textPane.setText("使用说明\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行；\n2. 可以幻化二名DLC等防具，射手剑士装可以互相幻化；\n3. 此幻化后，偶数位的防具还在。");

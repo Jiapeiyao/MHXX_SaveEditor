@@ -44,9 +44,9 @@ public class View1 {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, Main.windowWidth, Main.windowHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("MHXX Save Editor by Mononoke");
+		frame.setTitle("MHXX存档修改器 by Mononoke");
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblWelcome = new JLabel("欢迎使用MHXX存档修改器");
@@ -71,14 +71,16 @@ public class View1 {
 						FileInputStream in = new FileInputStream(file.getPath());
 						in.read(Main.buffer);
 					    in.close();
+					    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
+					    Main.user2offset = Main.buffer[22]*16*16*16*16 + Main.buffer[21]*16*16 + Main.buffer[20];
+					    Main.user3offset = Main.buffer[26]*16*16*16*16 + Main.buffer[25]*16*16 + Main.buffer[24];
+					    Main.useroffset = Main.user1offset;
+					    frame.setVisible(false);
+					    View2.main();
 					}
 				}catch(Exception exc){
 					JOptionPane.showMessageDialog(null, "请加载正确的存档文件System");
 				}
-			    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
-			    Main.equipmentBoxOffset = 1230690 - Main.user1offset;
-			    frame.setVisible(false);
-			    View2.main();
 			}
 		});
 		btnLoad.setBounds(166, 128, 117, 29);
