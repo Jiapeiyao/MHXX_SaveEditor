@@ -129,6 +129,7 @@ public class View2 {
 		toolBar.add(button_4);
 		
 		JButton button_5 = new JButton("保存");
+		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		JFileChooser f = new JFileChooser();
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
