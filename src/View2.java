@@ -20,7 +20,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import javax.swing.JTextPane;
@@ -29,7 +28,6 @@ import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 
 public class View2 {
 
@@ -39,6 +37,8 @@ public class View2 {
 	private JTextField tf_money;
 	private JTextField tf_HR;
 	private JTextField tf_AP;
+	private JComboBox cb_voice;
+	private JComboBox cb_gender;
 
 	/**
 	 * Launch the application.
@@ -67,21 +67,112 @@ public class View2 {
 		Main.emptySpaceInEquipBoxOffset = 0;
 		item.getItemBox();
 		tf_hunterName.setText(getHunterName());
-//		tf_money;
-//		tf_HR;
-//		tf_AP;
+		tf_money.setText(""+getMoney());
+		tf_HR.setText(""+getHR());
+		tf_AP.setText(""+getAP());
+		cb_voice.setSelectedIndex(getVoice());
+		cb_gender.setSelectedIndex(getGender());
 	}
 	
 	public String getHunterName(){
 		String name = "";
 		byte[] byteArray = new byte[32];
 		for (int i=0; i<32; i++){
-			byteArray[i] = Main.buffer[Main.useroffset + i];
+			byteArray[i] = Main.buffer[Main.useroffset + 146301 + i];
 		}
 		name = new String(byteArray, StandardCharsets.UTF_8);
 		return name;
 	}
 	
+	public void setHunterName(String name){
+		if (name.length()>10){
+			name = name.substring(0, 10);
+		}
+		byte[] b = name.getBytes(StandardCharsets.UTF_8);
+		for (int i=0; i<32; i++){
+			Main.buffer[Main.useroffset + i] = b[i];
+			Main.buffer[Main.useroffset + i + 146301] = b[i];
+		}
+	}
+	
+	public int getHR(){
+		int a = Main.buffer[Main.useroffset + 10254] & 0xff;
+		int b =	Main.buffer[Main.useroffset + 10253] & 0xff;
+		int c = Main.buffer[Main.useroffset + 10252] & 0xff;
+		int d = Main.buffer[Main.useroffset + 10251] & 0xff;
+		return (a*16*16*16*16*16*16 + b*16*16*16*16 + c*16*16 + d)/3000 + 9;
+		//return (Main.buffer[Main.useroffset + 40] & 0xff)  + (Main.buffer[Main.useroffset + 41] & 0xff) * 16 * 16;
+	}
+	
+	public void setHR(int hr){
+		Main.buffer[Main.useroffset + 40] = (byte)(hr%(16*16));
+		Main.buffer[Main.useroffset + 41] = (byte)(hr/(16*16));
+		int hrpts = (hr-9)*3000;
+		Main.buffer[Main.useroffset + 10251] = (byte)(hrpts%(16*16));
+		Main.buffer[Main.useroffset + 10252] = (byte)((hrpts/(16*16)) % (16*16));
+		Main.buffer[Main.useroffset + 10253] = (byte)((hrpts/(16*16*16*16)) % (16*16));
+		Main.buffer[Main.useroffset + 10254] = (byte)(hrpts/(16*16*16*16*16*16));
+	}
+	
+	public int getMoney(){
+		int a = Main.buffer[Main.useroffset + 10258] & 0xff;
+		int b =	Main.buffer[Main.useroffset + 10257] & 0xff;
+		int c = Main.buffer[Main.useroffset + 10256] & 0xff;
+		int d = Main.buffer[Main.useroffset + 10255] & 0xff;
+		return a*16*16*16*16*16*16 + b*16*16*16*16 + c*16*16 + d;
+	}
+	
+	public void setMoney(int money){
+		int a = money/(16*16*16*16*16*16);
+		int b = (money/(16*16*16*16)) % (16*16);
+		int c = (money/(16*16)) % (16*16);
+		int d = money % (16*16);
+		Main.buffer[Main.useroffset + 39] = (byte)a;
+		Main.buffer[Main.useroffset + 38] = (byte)b;
+		Main.buffer[Main.useroffset + 37] = (byte)c;
+		Main.buffer[Main.useroffset + 36] = (byte)d;
+		Main.buffer[Main.useroffset + 10258] = (byte)a;
+		Main.buffer[Main.useroffset + 10257] = (byte)b;
+		Main.buffer[Main.useroffset + 10256] = (byte)c;
+		Main.buffer[Main.useroffset + 10255] = (byte)d;
+	}
+
+	public int getAP(){
+		int a = Main.buffer[Main.useroffset + 10266] & 0xff;
+		int b =	Main.buffer[Main.useroffset + 10265] & 0xff;
+		int c = Main.buffer[Main.useroffset + 10264] & 0xff;
+		int d = Main.buffer[Main.useroffset + 10263] & 0xff;
+		return a*16*16*16*16*16*16 + b*16*16*16*16 + c*16*16 + d;
+	}
+	
+	public void setAP(int ap){
+		int a = ap/(16*16*16*16*16*16);
+		int b = (ap/(16*16*16*16)) % (16*16);
+		int c = (ap/(16*16)) % (16*16);
+		int d = ap % (16*16);
+		Main.buffer[Main.useroffset + 10266] = (byte)a;
+		Main.buffer[Main.useroffset + 10265] = (byte)b;
+		Main.buffer[Main.useroffset + 10264] = (byte)c;
+		Main.buffer[Main.useroffset + 10263] = (byte)d;
+	}
+	
+	public int getGender(){
+		return Main.buffer[Main.useroffset + 146251] & 0xff; //580
+	}
+	
+	public void setGender(int i){
+		Main.buffer[Main.useroffset + 580] = (byte)i;
+		Main.buffer[Main.useroffset + 146251] = (byte)i;
+	}
+	
+	public int getVoice(){
+		return Main.buffer[Main.useroffset + 146248] & 0xff; //580
+	}
+	
+	public void setVoice(int i){
+		Main.buffer[Main.useroffset + 577] = (byte)i;
+		Main.buffer[Main.useroffset + 146248] = (byte)i;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -263,36 +354,92 @@ public class View2 {
 		otherPanel.add(lbl_gender);
 		
 		tf_hunterName = new JTextField();
+		tf_hunterName.setText(getHunterName());
+//		tf_hunterName.addKeyListener(new KeyAdapter() {
+//		    public void keyTyped(KeyEvent e) {
+//		        char c = e.getKeyChar();
+//		        if (!(tf_hunterName.getText().length() <= 10 || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+//		          //getToolkit().beep();
+//		          e.consume();
+//		        }
+//		      }
+//		    });
 		tf_hunterName.setBounds(171, 18, 130, 26);
 		otherPanel.add(tf_hunterName);
 		tf_hunterName.setColumns(10);
 		
 		tf_money = new JTextField();
 		tf_money.setBounds(82, 112, 109, 26);
+		tf_money.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+		          //getToolkit().beep();
+		          e.consume();
+		        }
+		      }
+		    });
+		tf_money.setText(""+getMoney());
 		otherPanel.add(tf_money);
 		tf_money.setColumns(10);
 		
 		tf_HR = new JTextField();
-		tf_HR.setEditable(false);
-		tf_HR.setEnabled(false);
+		tf_HR.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+		          //getToolkit().beep();
+		          e.consume();
+		        }
+		      }
+		    });
+		tf_HR.setText(""+getHR());
 		tf_HR.setBounds(82, 158, 109, 26);
+		
 		otherPanel.add(tf_HR);
 		tf_HR.setColumns(10);
 		
-		JComboBox cb_sound = new JComboBox();
-		cb_sound.setBounds(284, 68, 71, 27);
-		otherPanel.add(cb_sound);
-		
 		tf_AP = new JTextField();
+		tf_AP.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+		          //getToolkit().beep();
+		          e.consume();
+		        }
+		      }
+		    });
 		tf_AP.setBounds(286, 112, 109, 26);
+		tf_AP.setText(""+getAP());
 		otherPanel.add(tf_AP);
 		tf_AP.setColumns(10);
 		
-		JComboBox cb_gender = new JComboBox();
+		cb_gender = new JComboBox();
 		cb_gender.setBounds(82, 68, 71, 27);
+		cb_gender.addItem("男");
+		cb_gender.addItem("女");
+		cb_gender.setSelectedIndex(getGender());
 		otherPanel.add(cb_gender);
 		
+		cb_voice = new JComboBox();
+		for (int i=1; i<=20; i++){
+			cb_voice.addItem(""+i);
+		}
+		cb_voice.setSelectedItem(getVoice());
+		cb_voice.setBounds(284, 68, 71, 27);
+		otherPanel.add(cb_voice);
+		
 		JButton btn_apply = new JButton("应用");
+		btn_apply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { 
+				setHunterName(tf_hunterName.getText());
+				setMoney(Integer.parseInt(tf_money.getText())%10000000);
+				setAP(Integer.parseInt(tf_AP.getText())%10000000);
+				setHR(Integer.parseInt(tf_HR.getText())%1000);
+				setGender(cb_gender.getSelectedIndex());
+				setVoice(cb_voice.getSelectedIndex());
+			}
+		});
 		btn_apply.setBounds(166, 199, 117, 29);
 		otherPanel.add(btn_apply);
 		

@@ -36,7 +36,6 @@ public class Main {
 	public static void main(String [ ] args)
 	{
 		getOS();
-	
 		View1.main();
 	}
 }
