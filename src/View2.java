@@ -32,6 +32,10 @@ public class View2 {
 
 	private JFrame frame;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextField tf_hunterName;
+	private JTextField tf_money;
+	private JTextField tf_HR;
+	private JTextField tf_AP;
 
 	/**
 	 * Launch the application.
@@ -54,6 +58,23 @@ public class View2 {
 	 */
 	public View2() {
 		initialize();
+	}
+	
+	public void reload() {
+		Main.emptySpaceInEquipBoxOffset = 0;
+		item.getItemBox();
+		tf_hunterName.setText(getHunterName());
+//		tf_money;
+//		tf_HR;
+//		tf_AP;
+	}
+	
+	public String getHunterName(){
+		String name = "";
+		for (int i=0; i<32; i++){
+			name = name + (char)Main.buffer[Main.useroffset + i];
+		}
+		return name;
 	}
 
 	/**
@@ -78,6 +99,8 @@ public class View2 {
 		JPanel visionPanel = new JPanel();		
 		JPanel talismanPanel = new JPanel();
 		container.add(otherPanel, "other");
+		otherPanel.setLayout(null);
+		
 		container.add(itemPanel, "item");
 		itemPanel.setLayout(null);
 		container.add(weaponPanel, "weapon");
@@ -92,7 +115,11 @@ public class View2 {
 		
 		talisman tsm = new talisman();
 		JButton button_0 = new JButton("综合");
-		button_0.setEnabled(false);
+		button_0.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cards.show(container, "other");
+			}
+		});
 		toolBar.add(button_0);
 		
 		JButton button_1 = new JButton("物品");
@@ -159,8 +186,7 @@ public class View2 {
 		rdbtnUser_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user1offset;
-				Main.emptySpaceInEquipBoxOffset = 0;
-				item.getItemBox();
+				reload();
 			}
 		});
 		buttonGroup.add(rdbtnUser_1);
@@ -171,8 +197,7 @@ public class View2 {
 		rdbtnUser_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user2offset;
-				Main.emptySpaceInEquipBoxOffset = 0;
-				item.getItemBox();
+				reload();
 			}
 		});
 		buttonGroup.add(rdbtnUser_2);
@@ -183,8 +208,7 @@ public class View2 {
 		rdbtnUser_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user3offset;
-				Main.emptySpaceInEquipBoxOffset = 0;
-				item.getItemBox();
+				reload();
 			}
 		});
 		buttonGroup.add(rdbtnUser_3);
@@ -193,7 +217,71 @@ public class View2 {
 		
 		rdbtnUser_1.setSelected(true);
 		
-		//<--------item Panel--------->//
+		//<-----------------------------------------------------otherPanel--------------------------------------------------------------------->//
+		
+		JLabel lbl_hn = new JLabel("猎人名：");
+		lbl_hn.setBounds(119, 23, 52, 16);
+		otherPanel.add(lbl_hn);
+		
+		JLabel lbl_time = new JLabel("游戏时间：");
+		lbl_time.setBounds(224, 163, 71, 16);
+		otherPanel.add(lbl_time);
+		
+		JLabel lbl_money = new JLabel("金钱：");
+		lbl_money.setBounds(46, 117, 61, 16);
+		otherPanel.add(lbl_money);
+		
+		JLabel lbl_HR = new JLabel("HR:");
+		lbl_HR.setBounds(46, 163, 61, 16);
+		otherPanel.add(lbl_HR);
+		
+		JLabel lbl_AP = new JLabel("农场点：");
+		lbl_AP.setBounds(224, 117, 61, 16);
+		otherPanel.add(lbl_AP);
+		
+		JLabel lbl_sound = new JLabel("声音：");
+		lbl_sound.setBounds(224, 72, 61, 16);
+		otherPanel.add(lbl_sound);
+		
+		JLabel lbl_gender = new JLabel("性别：");
+		lbl_gender.setBounds(46, 72, 61, 16);
+		otherPanel.add(lbl_gender);
+		
+		tf_hunterName = new JTextField();
+		tf_hunterName.setBounds(171, 18, 130, 26);
+		otherPanel.add(tf_hunterName);
+		tf_hunterName.setColumns(10);
+		
+		tf_money = new JTextField();
+		tf_money.setBounds(82, 112, 109, 26);
+		otherPanel.add(tf_money);
+		tf_money.setColumns(10);
+		
+		tf_HR = new JTextField();
+		tf_HR.setEditable(false);
+		tf_HR.setEnabled(false);
+		tf_HR.setBounds(82, 158, 109, 26);
+		otherPanel.add(tf_HR);
+		tf_HR.setColumns(10);
+		
+		JComboBox cb_sound = new JComboBox();
+		cb_sound.setBounds(284, 68, 71, 27);
+		otherPanel.add(cb_sound);
+		
+		tf_AP = new JTextField();
+		tf_AP.setBounds(286, 112, 109, 26);
+		otherPanel.add(tf_AP);
+		tf_AP.setColumns(10);
+		
+		JComboBox cb_gender = new JComboBox();
+		cb_gender.setBounds(82, 68, 71, 27);
+		otherPanel.add(cb_gender);
+		
+		JButton btn_apply = new JButton("应用");
+		btn_apply.setBounds(166, 199, 117, 29);
+		otherPanel.add(btn_apply);
+		
+		//<--------------------------------------------------item Panel--------------------------------------------------->//
 		JAutoCompleteComboBox cbItems = new JAutoCompleteComboBox();
 		cbItems.setBounds(48, 31, 225, 26);
 		itemPanel.add(cbItems);
@@ -323,7 +411,7 @@ public class View2 {
 		
 		
 				
-		//<--------Talisman Panel-------->//
+		//<-------------------------------------------------Talisman Panel-------------------------------------------------->//
 		//JAutoCompleteComboBox cbType = new JAutoCompleteComboBox();
 		JComboBox cbType = new JComboBox();
 		cbType.setBounds(199, 38, 123, 27);
@@ -428,7 +516,7 @@ public class View2 {
 		talismanPanel.add(btnAddtalisman);
 		
 		
-		//<--------------vision Panel---------------->//
+		//<-------------------------------------------------vision Panel--------------------------------------------------->//
 		JTextPane textPane = new JTextPane();
 		textPane.setBackground(UIManager.getColor("Panel.background"));
 		textPane.setText("使用说明\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行；\n2. 可以幻化二名DLC等防具，射手剑士装可以互相幻化；\n3. 此幻化后，偶数位的防具还在。");
