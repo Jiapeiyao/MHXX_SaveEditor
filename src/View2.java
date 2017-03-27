@@ -427,12 +427,10 @@ public class View2 {
 		otherPanel.add(cb_gender);
 		
 		cb_voice = new JComboBox();
-		cb_voice.setVisible(false);
 		for (int i=1; i<=20; i++){
 			cb_voice.addItem(""+i);
 		}
-		cb_voice.setSelectedItem(getVoice());
-		cb_voice.setVisible(true);
+		cb_voice.setSelectedIndex(getVoice());
 		cb_voice.setBounds(284, 68, 71, 27);
 		otherPanel.add(cb_voice);
 		
