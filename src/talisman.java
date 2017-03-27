@@ -356,23 +356,23 @@ public class talisman {
 			return;
 		}
 		int emptySpaceOffset = findEmptySpace();
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset] = 6;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 2] = (byte) typeCode;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 12] = (byte) sk1Code;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 13] = (byte) sk2Code;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 14] = (byte) sk1Num;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 15] = (byte) sk2Num;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 16] = (byte) slot;
-		if (typeCode == 1 || typeCode == 2  || typeCode == 3 || typeCode == 4)	Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 18] = (byte)98;
-		else if (typeCode == 5 || typeCode == 6  || typeCode == 7) Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 18] = (byte)99;
-		else if (typeCode == 8 || typeCode == 9  || typeCode == 10) Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 18] = (byte)100;
-		Main.buffer[Main.user1offset + Main.equipmentBoxOffset + emptySpaceOffset + 19] = (byte)01;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset] = 6;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 2] = (byte) typeCode;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 12] = (byte) sk1Code;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 13] = (byte) sk2Code;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 14] = (byte) sk1Num;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 15] = (byte) sk2Num;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 16] = (byte) slot;
+		if (typeCode == 1 || typeCode == 2  || typeCode == 3 || typeCode == 4)	Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 18] = (byte)98;
+		else if (typeCode == 5 || typeCode == 6  || typeCode == 7) Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 18] = (byte)99;
+		else if (typeCode == 8 || typeCode == 9  || typeCode == 10) Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 18] = (byte)100;
+		Main.buffer[Main.useroffset + Main.equipmentBoxOffset + emptySpaceOffset + 19] = (byte)01;
 		JOptionPane.showMessageDialog(null, "护石添加成功");
 	} 
 	
 	public static int findEmptySpace(){
 		for (int i = 0; i<36; i++){
-			if (Main.buffer[Main.user1offset + Main.equipmentBoxOffset + Main.emptySpaceInEquipBoxOffset + i] != (byte)0){
+			if (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + Main.emptySpaceInEquipBoxOffset + i] != (byte)0){
 				Main.emptySpaceInEquipBoxOffset += 36;
 				return findEmptySpace();
 			}

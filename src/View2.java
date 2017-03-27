@@ -209,7 +209,7 @@ public class View2 {
 		container.add(equipmentPanel, "equipment");
 		container.add(visionPanel, "vision");
 		container.add(talismanPanel, "talisman");
-		cards.show(container, "vision");
+		cards.show(container, "other");
 		frame.getContentPane().add(container, BorderLayout.CENTER);
 		visionPanel.setLayout(null);
 		talismanPanel.setLayout(null);
