@@ -437,6 +437,7 @@ public class View2 {
 		otherPanel.add(cb_voice);
 		
 		JButton btn_apply = new JButton("应用");
+		btn_apply.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		btn_apply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
 				setHunterName(tf_hunterName.getText());
@@ -445,6 +446,7 @@ public class View2 {
 				setHR(Integer.parseInt(tf_HR.getText())%1000);
 				setGender(cb_gender.getSelectedIndex());
 				setVoice(cb_voice.getSelectedIndex());
+				JOptionPane.showMessageDialog(null, "不要忘记按右上角保存哦");
 			}
 		});
 		btn_apply.setBounds(166, 199, 117, 29);
@@ -738,7 +740,7 @@ public class View2 {
 		vision3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int equipment1Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144] & 0xff) % 32;
-				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 160] & 0xff) % 32;
+				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 180] & 0xff) % 32;
 				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
 				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
