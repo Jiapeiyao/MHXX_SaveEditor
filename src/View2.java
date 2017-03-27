@@ -342,19 +342,19 @@ public class View2 {
 		JComboBox txtSkill1Num = new JComboBox();
 		txtSkill1Num.setBounds(295, 76, 78, 26);
 		talismanPanel.add(txtSkill1Num);
-		for (int i=14; i>=-10; i--){
+		for (int i=-10; i<15; i++){
 			txtSkill1Num.addItem(i);
 		}
-		txtSkill1Num.setSelectedIndex(14);
+		txtSkill1Num.setSelectedIndex(11);
 		
 				
 		JComboBox txtSkill2Num = new JComboBox();
 		txtSkill2Num.setBounds(295, 115, 78, 26);
 		talismanPanel.add(txtSkill2Num);
-		for (int i=14; i>=-10; i--){
+		for (int i=-10; i<15; i++){
 			txtSkill2Num.addItem(i);
 		}
-		txtSkill2Num.setSelectedIndex(14);
+		txtSkill2Num.setSelectedIndex(10);
 		
 		
 		JComboBox cbSlot = new JComboBox();
@@ -410,12 +410,12 @@ public class View2 {
 					return;
 				}
 				
-				int sk1Num = 14 - txtSkill1Num.getSelectedIndex();
+				int sk1Num = txtSkill1Num.getSelectedIndex() - 10;
 				if (sk1Num == 0){	
 					JOptionPane.showMessageDialog(null, "请填写技能1点数");
 					return;
 				}
-				int sk2Num = 14 - txtSkill2Num.getSelectedIndex();
+				int sk2Num = txtSkill2Num.getSelectedIndex() - 10;
 				
 				int slot = cbSlot.getSelectedIndex();
 				
