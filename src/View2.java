@@ -90,8 +90,13 @@ public class View2 {
 		}
 		byte[] b = name.getBytes(StandardCharsets.UTF_8);
 		for (int i=0; i<32; i++){
-			Main.buffer[Main.useroffset + i] = b[i];
-			Main.buffer[Main.useroffset + i + 146301] = b[i];
+			if (i < b.length){
+				Main.buffer[Main.useroffset + i] = b[i];
+				Main.buffer[Main.useroffset + i + 146301] = b[i];
+			} else {
+				Main.buffer[Main.useroffset + i] = (byte)0;
+				Main.buffer[Main.useroffset + i + 146301] = (byte)0;
+			}
 		}
 	}
 	
@@ -166,12 +171,12 @@ public class View2 {
 	}
 	
 	public int getVoice(){
-		return Main.buffer[Main.useroffset + 146248] & 0xff; //580
+		return Main.buffer[Main.useroffset + 146248] & 0xff - 1; //580
 	}
 	
 	public void setVoice(int i){
-		Main.buffer[Main.useroffset + 577] = (byte)i;
-		Main.buffer[Main.useroffset + 146248] = (byte)i;
+		Main.buffer[Main.useroffset + 577] = (byte)(i+1);
+		Main.buffer[Main.useroffset + 146248] = (byte)(i+1);
 	}
 
 	/**
@@ -422,10 +427,12 @@ public class View2 {
 		otherPanel.add(cb_gender);
 		
 		cb_voice = new JComboBox();
+		cb_voice.setVisible(false);
 		for (int i=1; i<=20; i++){
 			cb_voice.addItem(""+i);
 		}
 		cb_voice.setSelectedItem(getVoice());
+		cb_voice.setVisible(true);
 		cb_voice.setBounds(284, 68, 71, 27);
 		otherPanel.add(cb_voice);
 		
