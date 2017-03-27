@@ -58,8 +58,8 @@ public class item {
 		byte[] itemBoxBytes = new byte[NumberOfBytes];
 		String binStrOfItemBox = "";
 		for (int i = 0; i< NumberOfBytes; i++){
-			itemBoxBytes[i] = Main.buffer[Main.useroffset + Main.itemBoxOffset + i];
-			String binStrOfByte = fromIntToBin((int)itemBoxBytes[i], 8);
+			itemBoxBytes[i] = (byte) (Main.buffer[Main.useroffset + Main.itemBoxOffset + i] & 0xff);
+			String binStrOfByte = fromIntToBin(itemBoxBytes[i] & 0xff, 8);
 			//System.out.println(binStrOfByte);
 			binStrOfItemBox = binStrOfByte + binStrOfItemBox;
 		}

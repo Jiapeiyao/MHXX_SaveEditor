@@ -71,9 +71,12 @@ public class View1 {
 						FileInputStream in = new FileInputStream(file.getPath());
 						in.read(Main.buffer);
 					    in.close();
-					    Main.user1offset = Main.buffer[18]*16*16*16*16 + Main.buffer[17]*16*16 + Main.buffer[16];
-					    Main.user2offset = Main.buffer[22]*16*16*16*16 + Main.buffer[21]*16*16 + Main.buffer[20];
-					    Main.user3offset = Main.buffer[26]*16*16*16*16 + Main.buffer[25]*16*16 + Main.buffer[24];
+					    Main.user1offset = (Main.buffer[18] & 0xff)*16*16*16*16 + (Main.buffer[17] & 0xff)*16*16 + (Main.buffer[16] & 0xff);
+					    Main.user2offset = (Main.buffer[22] & 0xff)*16*16*16*16 + (Main.buffer[21] & 0xff)*16*16 + (Main.buffer[20] & 0xff);
+//					    System.out.println((int)Main.buffer[26] & 0xff);
+//					    System.out.println((int)Main.buffer[25] & 0xff);
+//					    System.out.println((int)Main.buffer[24] & 0xff);
+					    Main.user3offset = (Main.buffer[26] & 0xff)*16*16*16*16 + (Main.buffer[25] & 0xff)*16*16 + (Main.buffer[24] & 0xff);
 					    Main.useroffset = Main.user1offset;
 					    frame.setVisible(false);
 					    View2.main();

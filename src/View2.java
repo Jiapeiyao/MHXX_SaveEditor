@@ -20,6 +20,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.JRadioButton;
@@ -71,11 +74,14 @@ public class View2 {
 	
 	public String getHunterName(){
 		String name = "";
+		byte[] byteArray = new byte[32];
 		for (int i=0; i<32; i++){
-			name = name + (char)Main.buffer[Main.useroffset + i];
+			byteArray[i] = Main.buffer[Main.useroffset + i];
 		}
+		name = new String(byteArray, StandardCharsets.UTF_8);
 		return name;
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -183,6 +189,9 @@ public class View2 {
 		
 		//UserX Radio Buttons
 		JRadioButton rdbtnUser_1 = new JRadioButton("User1");
+		if ((int)Main.buffer[4] == 0){
+			rdbtnUser_1.setEnabled(false);
+		}
 		rdbtnUser_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user1offset;
@@ -194,6 +203,9 @@ public class View2 {
 		toolBar.add(rdbtnUser_1);
 		
 		JRadioButton rdbtnUser_2 = new JRadioButton("User2");
+		if ((int)Main.buffer[5] == 0){
+			rdbtnUser_2.setEnabled(false);
+		}
 		rdbtnUser_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user2offset;
@@ -205,6 +217,9 @@ public class View2 {
 		toolBar.add(rdbtnUser_2);
 		
 		JRadioButton rdbtnUser_3 = new JRadioButton("User3");
+		if ((int)Main.buffer[6] == 0){
+			rdbtnUser_3.setEnabled(false);
+		}
 		rdbtnUser_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user3offset;
@@ -526,12 +541,10 @@ public class View2 {
 		JButton vision1 = new JButton("将第1格防具幻化为第2格防具的外形");
 		vision1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset] % 32;
-				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 36] % 32;
+				int equipment1Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset] & 0xff) % 32;
+				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 36] & 0xff) % 32;
 				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
 				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
-//				System.out.println(equipment1Type);
-//				System.out.println(equipment2Type);
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
 					JOptionPane.showMessageDialog(null, "失败！请按照说明放好防具");
 					return;
@@ -549,8 +562,8 @@ public class View2 {
 		JButton vision2 = new JButton("将第3格防具幻化为第4格防具的外形");
 		vision2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 72] % 32;
-				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 108] % 32;
+				int equipment1Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 72] & 0xff) % 32;
+				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 108] & 0xff) % 32;
 				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
 				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
@@ -570,8 +583,8 @@ public class View2 {
 		JButton vision3 = new JButton("将第5格防具幻化为第6格防具的外形");
 		vision3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144] % 32;
-				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 160] % 32;
+				int equipment1Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 144] & 0xff) % 32;
+				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 160] & 0xff) % 32;
 				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
 				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
@@ -591,8 +604,8 @@ public class View2 {
 		JButton vision4 = new JButton("将第7格防具幻化为第8格防具的外形");
 		vision4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 216] % 32;
-				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 252] % 32;
+				int equipment1Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 216] & 0xff) % 32;
+				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 252] & 0xff) % 32;
 				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
 				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
@@ -612,8 +625,8 @@ public class View2 {
 		JButton vision5 = new JButton("将第9格防具幻化为第10格防具的外形");
 		vision5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int equipment1Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 288] % 32;
-				int equipment2Type = Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 324] % 32;
+				int equipment1Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 288] & 0xff) % 32;
+				int equipment2Type = (Main.buffer[Main.useroffset + Main.equipmentBoxOffset + 324] & 0xff) % 32;
 				equipment1Type = (equipment1Type<0)?equipment1Type+32:equipment1Type;
 				equipment2Type = (equipment2Type<0)?equipment2Type+32:equipment2Type;
 				if (equipment1Type < 1 || equipment1Type > 5 || equipment2Type < 1 || equipment2Type > 5) {
