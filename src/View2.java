@@ -218,7 +218,13 @@ public class View2 {
 		JButton btn_add_item = new JButton("添加物品");
 		btn_add_item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int itemId = cbItems.getSelectedIndex();
+				String itemStr = cbItems.getSelectedItem().toString();
+				int itemId = 0;
+				for (int i = 0; i < item.itemList.length; i++){
+					if (itemStr == item.itemList[i]){
+						itemId = i;
+					}
+				}
 				System.out.print(itemId);
 				int itemNum = Integer.parseInt(tf_itemNum.getText());
 				if (itemId!=0 && itemNum!=0){
