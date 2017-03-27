@@ -158,6 +158,7 @@ public class View2 {
 		rdbtnUser_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user1offset;
+				Main.emptySpaceInEquipBoxOffset = 0;
 				item.getItemBox();
 			}
 		});
@@ -169,6 +170,7 @@ public class View2 {
 		rdbtnUser_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user2offset;
+				Main.emptySpaceInEquipBoxOffset = 0;
 				item.getItemBox();
 			}
 		});
@@ -180,6 +182,7 @@ public class View2 {
 		rdbtnUser_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user3offset;
+				Main.emptySpaceInEquipBoxOffset = 0;
 				item.getItemBox();
 			}
 		});
