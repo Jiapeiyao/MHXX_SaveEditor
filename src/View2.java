@@ -455,7 +455,6 @@ public class View2 {
 		cbItems.setBounds(48, 31, 225, 26);
 		itemPanel.add(cbItems);
 		item.parseItemList();
-		cbItems.addItem("(选择物品)");
 		for (int i=0; i<item.itemList.length; i++)
 			cbItems.addItem(item.itemList[i]);
 		
@@ -481,9 +480,11 @@ public class View2 {
 				for (int i = 0; i < item.itemList.length; i++){
 					if (itemStr == item.itemList[i]){
 						itemId = i;
+						System.out.println("Select " + i + ": " + item.itemList[i]);
+						break;
 					}
 				}
-				System.out.print(itemId);
+				//System.out.print(itemId);
 				int itemNum = Integer.parseInt(tf_itemNum.getText());
 				if (itemId!=0 && itemNum!=0){
 					if (item.addItemToBox(itemId, itemNum)) {
