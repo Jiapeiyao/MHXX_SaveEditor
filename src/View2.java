@@ -110,9 +110,15 @@ public class View2 {
 	}
 	
 	public void setHR(int hr){
-		Main.buffer[Main.useroffset + 40] = (byte)(hr%(16*16));
-		Main.buffer[Main.useroffset + 41] = (byte)(hr/(16*16));
-		int hrpts = (hr-9)*3000;
+		if (hr>=13){
+			Main.buffer[Main.useroffset + 40] = (byte)(hr%(16*16));
+			Main.buffer[Main.useroffset + 41] = (byte)(hr/(16*16));
+		}
+		int hrpts = 29420;
+		for (int i=13; i<=hr; i++){
+			hrpts += Math.min((i-9) * 70 + 1000, 4010) + ((i-2)/100) * 70;
+		}
+		System.out.print(hrpts);
 		Main.buffer[Main.useroffset + 10251] = (byte)(hrpts%(16*16));
 		Main.buffer[Main.useroffset + 10252] = (byte)((hrpts/(16*16)) % (16*16));
 		Main.buffer[Main.useroffset + 10253] = (byte)((hrpts/(16*16*16*16)) % (16*16));
@@ -342,8 +348,8 @@ public class View2 {
 		lbl_money.setBounds(46, 117, 61, 16);
 		otherPanel.add(lbl_money);
 		
-		JLabel lbl_HR = new JLabel("HR:");
-		lbl_HR.setBounds(46, 163, 61, 16);
+		JLabel lbl_HR = new JLabel("HR(解禁后):");
+		lbl_HR.setBounds(46, 163, 81, 16);
 		otherPanel.add(lbl_HR);
 		
 		JLabel lbl_AP = new JLabel("农场点：");
@@ -399,7 +405,7 @@ public class View2 {
 		      }
 		    });
 		tf_HR.setText(""+getHR());
-		tf_HR.setBounds(82, 158, 109, 26);
+		tf_HR.setBounds(139, 158, 52, 26);
 		
 		otherPanel.add(tf_HR);
 		tf_HR.setColumns(10);

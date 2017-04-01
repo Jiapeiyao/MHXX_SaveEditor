@@ -1,4 +1,8 @@
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
@@ -211,9 +215,14 @@ public class talisman {
 			+ "201 = 对霞龙		: : : : : 0~0 | -3~3 : : : : :\n"
 			+ "202 = 对炎龙		: : : : : 0~0 | -3~3 : : : : :\n"
 			+ "203 = 胴系统倍加?	: : : : : : : : : :\n";
+	
+	//private String skill_limits_mhxx = "";
+	
 	public talisman(){
 		parseSkills();
 	}
+	
+
 	
 	public enum ItemType {
 	    First("First choice", 1), Second("Second choice", 2), Third("Final choice", 3);
@@ -381,8 +390,8 @@ public class talisman {
 	}
 		
 	
-//	public static void main(String [ ] args)
-//	{
+	public static void main(String [ ] args)
+	{
 //		String reg = "[0-9]+\\s*=\\s*+\\S+.*";
 //		String str = "2 = 麻痺			: 1~5 | 0~0 : : 1~5 | -10~7 : : 0~0 | 0~0 : : : : :";
 //		System.out.print(Pattern.matches(reg, str));
@@ -394,6 +403,7 @@ public class talisman {
 //	    }
 //		talisman t = new talisman();
 //		t.parseSkills();
-//	}
+	}
+	
 
 }
