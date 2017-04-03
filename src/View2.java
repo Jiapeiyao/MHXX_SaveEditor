@@ -278,9 +278,9 @@ public class View2 {
 		toolBar.add(button_4);
 		
 		JButton button_5 = new JButton("保存");
-		button_5.setBackground(new Color(128, 128, 128));
-		button_5.setForeground(new Color(139, 0, 0));
-		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		button_5.setBackground(Color.GRAY);
+		button_5.setForeground(new Color(220, 20, 60));
+		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		//JFileChooser f = new JFileChooser();
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
