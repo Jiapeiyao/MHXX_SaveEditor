@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.JFileChooser;
 
@@ -42,16 +41,20 @@ public class Main {
 	   
 	public static void main(String [ ] args)
 	{
-//		try(BufferedReader br = new BufferedReader(new FileReader("db/skill_limits_mhxx.csv"))) {
+		
+//		try {
+//			BufferedReader br = new BufferedReader(new FileReader("db/skill_limits_mhxx.txt"));
 //		    StringBuilder sb = new StringBuilder();
 //		    String line = br.readLine();
-//		    String str = "";
 //		    while (line != null) {
-//		        sb.append(line);
-//		        sb.append(System.lineSeparator());
+//		        sb.append("+ \"" + line);
+//		        //sb.append(System.lineSeparator());
+//		        line = br.readLine();
+//		        sb.append(line + "\\n\"\n");
+//		        line = br.readLine();
 //		    }
-//		    System.out.print(str);
-//		    //String everything = sb.toString();  
+//		    String everything = sb.toString();
+//		    System.out.print(everything);
 //		} catch (FileNotFoundException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
@@ -59,6 +62,12 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+//		String i = ",,,3,5,321,";
+//		String[] j = i.split(",", -1);
+//		System.out.print("???"+(j[1]==(String)null)+"???");
+
+
+		
 		getOS();
 		View1.main();
 	}

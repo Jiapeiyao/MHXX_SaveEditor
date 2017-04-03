@@ -29,17 +29,19 @@ import java.awt.Font;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class View2 {
 
 	private JFrame frame;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup userBtnGroup = new ButtonGroup();
 	private JTextField tf_hunterName;
 	private JTextField tf_money;
 	private JTextField tf_HR;
 	private JTextField tf_AP;
 	private JComboBox cb_voice;
-	private JComboBox cb_gender;
+	private JComboBox<String> cb_gender;
 
 	/**
 	 * Launch the application.
@@ -291,7 +293,7 @@ public class View2 {
 						FileOutputStream out = new FileOutputStream(file.getPath());
 						out.write(Main.buffer);
 					    out.close();
-					    JOptionPane.showConfirmDialog(null, "已保存");
+					    JOptionPane.showMessageDialog(null, "已保存");
 					}
 					
 					
@@ -318,7 +320,7 @@ public class View2 {
 				reload();
 			}
 		});
-		buttonGroup.add(rdbtnUser_1);
+		userBtnGroup.add(rdbtnUser_1);
 		rdbtnUser_1.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		toolBar.add(rdbtnUser_1);
 		
@@ -332,7 +334,7 @@ public class View2 {
 				reload();
 			}
 		});
-		buttonGroup.add(rdbtnUser_2);
+		userBtnGroup.add(rdbtnUser_2);
 		rdbtnUser_2.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		toolBar.add(rdbtnUser_2);
 		
@@ -346,7 +348,7 @@ public class View2 {
 				reload();
 			}
 		});
-		buttonGroup.add(rdbtnUser_3);
+		userBtnGroup.add(rdbtnUser_3);
 		rdbtnUser_3.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		toolBar.add(rdbtnUser_3);
 		
@@ -443,7 +445,7 @@ public class View2 {
 		otherPanel.add(tf_AP);
 		tf_AP.setColumns(10);
 		
-		cb_gender = new JComboBox();
+		cb_gender = new JComboBox<String>();
 		cb_gender.setBounds(103, 68, 98, 27);
 		cb_gender.addItem("男");
 		cb_gender.addItem("女");
@@ -608,52 +610,68 @@ public class View2 {
 		//<-------------------------------------------------Talisman Panel-------------------------------------------------->//
 		//JAutoCompleteComboBox cbType = new JAutoCompleteComboBox();
 		JComboBox cbType = new JComboBox();
-		cbType.setBounds(136, 27, 145, 27);
-		talismanPanel.add(cbType);
 		cbType.setModel(new DefaultComboBoxModel(talisman.tType.values()));
-		
+		cbType.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getSource() == cbType){
+		            if(e.getStateChange() == ItemEvent.SELECTED){
+		                //System.out.print("Select");
+		            	if (cbType.getSelectedIndex()==0){
+		            		tsm.selectedTalismanRarityType = 0;
+		            	} else if (cbType.getSelectedIndex()==1){
+		            		tsm.selectedTalismanRarityType = 1;
+		            	} else if (cbType.getSelectedIndex()>1 && cbType.getSelectedIndex()<=4){
+		            		tsm.selectedTalismanRarityType = 2;
+		            	} else if (cbType.getSelectedIndex()>4 && cbType.getSelectedIndex()<=7){
+		            		tsm.selectedTalismanRarityType = 3;
+		            	} else if (cbType.getSelectedIndex()>7 && cbType.getSelectedIndex()<=10){
+		            		tsm.selectedTalismanRarityType = 4;
+		            	}
+		            }
+
+		        }
+			}
+		});
+		cbType.setBounds(167, 27, 145, 27);
+		talismanPanel.add(cbType);
+	
 		JAutoCompleteComboBox cbSkill1 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill1 = new JComboBox();
-		cbSkill1.setBounds(112, 77, 123, 27);
+		for (int i=0; i<204; i++) {
+			cbSkill1.addItem(tsm.skill1LimitTable[i]);
+		}
+		cbSkill1.setBounds(112, 77, 236, 27);
 		talismanPanel.add(cbSkill1);
 		
 		JAutoCompleteComboBox cbSkill2 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill2 = new JComboBox();
-		cbSkill2.setBounds(112, 127, 123, 27);
+		for (int i=0; i<204; i++){
+			cbSkill2.addItem(tsm.skill2LimitTable[i]);
+		}
+		cbSkill2.setBounds(112, 127, 236, 27);
 		talismanPanel.add(cbSkill2);
 		
-		JComboBox txtSkill1Num = new JComboBox();
-		txtSkill1Num.setBounds(242, 78, 78, 26);
+		JComboBox<Integer> txtSkill1Num = new JComboBox<Integer>();
+		txtSkill1Num.setBounds(360, 78, 78, 26);
 		talismanPanel.add(txtSkill1Num);
 		for (int i=-10; i<15; i++){
 			txtSkill1Num.addItem(i);
 		}
 		txtSkill1Num.setSelectedIndex(11);
-		
 				
-		JComboBox txtSkill2Num = new JComboBox();
-		txtSkill2Num.setBounds(242, 128, 78, 26);
+		JComboBox<Integer> txtSkill2Num = new JComboBox<Integer>();
+		txtSkill2Num.setBounds(360, 128, 78, 26);
 		talismanPanel.add(txtSkill2Num);
 		for (int i=-10; i<15; i++){
 			txtSkill2Num.addItem(i);
 		}
 		txtSkill2Num.setSelectedIndex(10);
-		
-		
-		JComboBox cbSlot = new JComboBox();
+			
+		JComboBox<Integer> cbSlot = new JComboBox<Integer>();
 		cbSlot.setBounds(112, 180, 61, 27);
+		for (int i=0; i<4; i++)	cbSlot.addItem(i);
 		talismanPanel.add(cbSlot);
-		
-		for (int i=0; i<204; i++){
-			cbSkill1.addItem(tsm.ts[i]);
-		}
-		for (int i=0; i<204; i++){
-			cbSkill2.addItem(tsm.ts[i]);
-		}
-		for (int i=0; i<4; i++){
-			cbSlot.addItem(i);
-		}
-						
+								
 		JLabel lblSkill1 = new JLabel("技能1");
 		lblSkill1.setBounds(53, 82, 61, 16);
 		talismanPanel.add(lblSkill1);
@@ -670,7 +688,7 @@ public class View2 {
 		lblType.setBounds(53, 31, 71, 16);
 		talismanPanel.add(lblType);
 		
-		JButton btnAddtalisman = new JButton("快速添加护石");
+		JButton btnAddtalisman = new JButton("添加护石");
 		btnAddtalisman.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int typeCode = cbType.getSelectedIndex();
@@ -679,15 +697,10 @@ public class View2 {
 					return;
 				}
 				
-				String skill1 = cbSkill1.getSelectedItem().toString();
-				String skill2 = cbSkill2.getSelectedItem().toString();
-				int sk1Code = 0, sk2Code = 0;
-				
-				for (int i=0; i<204; i++){
-					if (skill1 == tsm.ts[i].toString()) sk1Code = i;
-					if (skill2 == tsm.ts[i].toString()) sk2Code = i;
-				}
-				
+				int sk1Code = ((talisman.singleSkillInfo) cbSkill1.getSelectedItem()).getIndex();
+				int sk2Code = ((talisman.singleSkillInfo) cbSkill2.getSelectedItem()).getIndex();
+//				System.out.println(sk1Code);
+//				System.out.println(sk2Code);
 				if (sk1Code == 0){	
 					JOptionPane.showMessageDialog(null, "请选择护石技能");
 					return;
@@ -706,7 +719,7 @@ public class View2 {
 				
 			}
 		});
-		btnAddtalisman.setBounds(295, 223, 117, 29);
+		btnAddtalisman.setBounds(320, 200, 118, 47);
 		talismanPanel.add(btnAddtalisman);
 		
 		
