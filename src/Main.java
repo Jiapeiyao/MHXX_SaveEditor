@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.swing.JFileChooser;
+
 public class Main {
 	public final static int bufferSize = 295385 * 16 - 8;
 	public final static byte[] buffer = new byte[bufferSize];
@@ -16,6 +18,7 @@ public class Main {
 	public static int itemBoxOffset = 632;
 	public static int windowWidth = 480;
 	public static int windowHeight = 330;
+	public static JFileChooser f = new JFileChooser();
 	
 	public static String getOS() {
 	    String os = System.getProperty("os.name").toLowerCase();

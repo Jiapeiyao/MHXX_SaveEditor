@@ -279,15 +279,15 @@ public class View2 {
 		button_5.setBackground(new Color(128, 128, 128));
 		button_5.setForeground(new Color(139, 0, 0));
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		JFileChooser f = new JFileChooser();
+		//JFileChooser f = new JFileChooser();
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					//f.setDialogTitle("保存存档文件");
-					f.setDialogType(JFileChooser.SAVE_DIALOG);
-					int openResult = f.showDialog(null, "保存存档文件");
+					Main.f.setDialogType(JFileChooser.SAVE_DIALOG);
+					int openResult = Main.f.showDialog(null, "保存存档文件");
 					if (openResult == JFileChooser.APPROVE_OPTION) {
-						File file = f.getSelectedFile();
+						File file = Main.f.getSelectedFile();
 						FileOutputStream out = new FileOutputStream(file.getPath());
 						out.write(Main.buffer);
 					    out.close();

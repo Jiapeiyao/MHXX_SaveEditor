@@ -60,14 +60,14 @@ public class View1 {
 		frame.getContentPane().add(lblStatement);
 		
 		JButton btnLoad = new JButton("加载存档");
-		JFileChooser f = new JFileChooser();
+		//JFileChooser f = new JFileChooser();
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					f.setDialogTitle("打开存档文件");
-					int openResult = f.showOpenDialog(null);
+					Main.f.setDialogTitle("打开存档文件");
+					int openResult = Main.f.showOpenDialog(null);
 					if (openResult == JFileChooser.APPROVE_OPTION) {
-						File file = f.getSelectedFile();
+						File file = Main.f.getSelectedFile();
 						FileInputStream in = new FileInputStream(file.getPath());
 						in.read(Main.buffer);
 					    in.close();
