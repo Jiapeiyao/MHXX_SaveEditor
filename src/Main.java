@@ -14,8 +14,8 @@ public class Main {
 	public static int emptySpaceInEquipBoxOffset = 0;
 	public static int useroffset;
 	public static int itemBoxOffset = 632;
-	public static int windowWidth = 450;
-	public static int windowHeight = 300;
+	public static int windowWidth = 480;
+	public static int windowHeight = 330;
 	
 	public static String getOS() {
 	    String os = System.getProperty("os.name").toLowerCase();
@@ -24,8 +24,8 @@ public class Main {
 	       return "MAC";
 	    }
 	    else if(os.indexOf("win") >= 0){
-	    	windowWidth = 480;
-	    	windowHeight = 330;
+	    	windowWidth = 520;
+	    	windowHeight = 360;
 	       return "WIN";
 	    }
 	    else if(os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0){

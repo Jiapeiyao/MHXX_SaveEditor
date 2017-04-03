@@ -28,6 +28,7 @@ import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
+import java.awt.Color;
 
 public class View2 {
 
@@ -105,7 +106,21 @@ public class View2 {
 		int b =	Main.buffer[Main.useroffset + 10253] & 0xff;
 		int c = Main.buffer[Main.useroffset + 10252] & 0xff;
 		int d = Main.buffer[Main.useroffset + 10251] & 0xff;
-		return (a*16*16*16*16*16*16 + b*16*16*16*16 + c*16*16 + d)/3000 + 9;
+		int e = Main.buffer[Main.useroffset + 40] & 0xff;
+		int f = Main.buffer[Main.useroffset + 41] & 0xff;
+		int currentHRpts = (a*16*16*16*16*16*16 + b*16*16*16*16 + c*16*16 + d);
+		if (  currentHRpts <= 29420){
+			return e + f*16*16;
+		}
+		int hrpts = 29420;
+		for (int i=13; i<=999; i++){
+			hrpts += Math.min((i-9) * 70 + 1000, 4010) + ((i-2)/100) * 70;
+			if (hrpts > currentHRpts){
+				currentHRpts = i-1;
+				break;
+			}
+		}
+		return currentHRpts;
 		//return (Main.buffer[Main.useroffset + 40] & 0xff)  + (Main.buffer[Main.useroffset + 41] & 0xff) * 16 * 16;
 	}
 	
@@ -118,12 +133,13 @@ public class View2 {
 		for (int i=13; i<=hr; i++){
 			hrpts += Math.min((i-9) * 70 + 1000, 4010) + ((i-2)/100) * 70;
 		}
-		System.out.print(hrpts);
+		//System.out.print(hrpts);
 		Main.buffer[Main.useroffset + 10251] = (byte)(hrpts%(16*16));
 		Main.buffer[Main.useroffset + 10252] = (byte)((hrpts/(16*16)) % (16*16));
 		Main.buffer[Main.useroffset + 10253] = (byte)((hrpts/(16*16*16*16)) % (16*16));
 		Main.buffer[Main.useroffset + 10254] = (byte)(hrpts/(16*16*16*16*16*16));
 	}
+
 	
 	public int getMoney(){
 		int a = Main.buffer[Main.useroffset + 10258] & 0xff;
@@ -177,7 +193,7 @@ public class View2 {
 	}
 	
 	public int getVoice(){
-		return Main.buffer[Main.useroffset + 146248] & 0xff - 1; //580
+		return (Main.buffer[Main.useroffset + 146248] & 0xff) - 1; //580
 	}
 	
 	public void setVoice(int i){
@@ -202,7 +218,7 @@ public class View2 {
 		JPanel container = new JPanel(cards);
 		JPanel otherPanel = new JPanel();
 		JPanel itemPanel = new JPanel();
-		JPanel weaponPanel = new JPanel();
+		JPanel saveCopyPanel = new JPanel();
 		JPanel equipmentPanel = new JPanel();
 		JPanel visionPanel = new JPanel();		
 		JPanel talismanPanel = new JPanel();
@@ -211,7 +227,7 @@ public class View2 {
 		
 		container.add(itemPanel, "item");
 		itemPanel.setLayout(null);
-		container.add(weaponPanel, "weapon");
+		container.add(saveCopyPanel, "weapon");
 		container.add(equipmentPanel, "equipment");
 		container.add(visionPanel, "vision");
 		container.add(talismanPanel, "talisman");
@@ -239,13 +255,9 @@ public class View2 {
 		});
 		toolBar.add(button_1);
 		
-		JButton button_2 = new JButton("武器");
+		JButton button_2 = new JButton("装备");
 		button_2.setEnabled(false);
 		toolBar.add(button_2);
-		
-		JButton button_3 = new JButton("防具");
-		button_3.setEnabled(false);
-		toolBar.add(button_3);
 		
 		JButton button_6 = new JButton("幻化");
 		button_6.addActionListener(new ActionListener() {
@@ -264,6 +276,8 @@ public class View2 {
 		toolBar.add(button_4);
 		
 		JButton button_5 = new JButton("保存");
+		button_5.setBackground(new Color(128, 128, 128));
+		button_5.setForeground(new Color(139, 0, 0));
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		JFileChooser f = new JFileChooser();
 		button_5.addActionListener(new ActionListener() {
@@ -286,6 +300,10 @@ public class View2 {
 				}
 			}
 		});
+		
+		JButton button_3 = new JButton("存档复制");
+		button_3.setEnabled(false);
+		toolBar.add(button_3);
 		toolBar.add(button_5);
 		
 		
@@ -341,7 +359,7 @@ public class View2 {
 		otherPanel.add(lbl_hn);
 		
 		JLabel lbl_time = new JLabel("游戏时间：");
-		lbl_time.setBounds(224, 163, 71, 16);
+		lbl_time.setBounds(250, 163, 71, 16);
 		otherPanel.add(lbl_time);
 		
 		JLabel lbl_money = new JLabel("金钱：");
@@ -353,11 +371,11 @@ public class View2 {
 		otherPanel.add(lbl_HR);
 		
 		JLabel lbl_AP = new JLabel("农场点：");
-		lbl_AP.setBounds(224, 117, 61, 16);
+		lbl_AP.setBounds(250, 117, 61, 16);
 		otherPanel.add(lbl_AP);
 		
 		JLabel lbl_sound = new JLabel("声音：");
-		lbl_sound.setBounds(224, 72, 61, 16);
+		lbl_sound.setBounds(250, 72, 61, 16);
 		otherPanel.add(lbl_sound);
 		
 		JLabel lbl_gender = new JLabel("性别：");
@@ -380,7 +398,7 @@ public class View2 {
 		tf_hunterName.setColumns(10);
 		
 		tf_money = new JTextField();
-		tf_money.setBounds(82, 112, 109, 26);
+		tf_money.setBounds(103, 112, 98, 26);
 		tf_money.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
 		        char c = e.getKeyChar();
@@ -405,7 +423,7 @@ public class View2 {
 		      }
 		    });
 		tf_HR.setText(""+getHR());
-		tf_HR.setBounds(139, 158, 52, 26);
+		tf_HR.setBounds(139, 158, 63, 26);
 		
 		otherPanel.add(tf_HR);
 		tf_HR.setColumns(10);
@@ -420,13 +438,13 @@ public class View2 {
 		        }
 		      }
 		    });
-		tf_AP.setBounds(286, 112, 109, 26);
+		tf_AP.setBounds(310, 112, 109, 26);
 		tf_AP.setText(""+getAP());
 		otherPanel.add(tf_AP);
 		tf_AP.setColumns(10);
 		
 		cb_gender = new JComboBox();
-		cb_gender.setBounds(82, 68, 71, 27);
+		cb_gender.setBounds(103, 68, 98, 27);
 		cb_gender.addItem("男");
 		cb_gender.addItem("女");
 		cb_gender.setSelectedIndex(getGender());
@@ -437,7 +455,7 @@ public class View2 {
 			cb_voice.addItem(""+i);
 		}
 		cb_voice.setSelectedIndex(getVoice());
-		cb_voice.setBounds(284, 68, 71, 27);
+		cb_voice.setBounds(310, 68, 109, 27);
 		otherPanel.add(cb_voice);
 		
 		JButton btn_apply = new JButton("应用");
@@ -453,19 +471,19 @@ public class View2 {
 				JOptionPane.showMessageDialog(null, "不要忘记按右上角保存哦");
 			}
 		});
-		btn_apply.setBounds(166, 199, 117, 29);
+		btn_apply.setBounds(150, 196, 179, 56);
 		otherPanel.add(btn_apply);
 		
 		//<--------------------------------------------------item Panel--------------------------------------------------->//
 		JAutoCompleteComboBox cbItems = new JAutoCompleteComboBox();
-		cbItems.setBounds(48, 31, 225, 26);
+		cbItems.setBounds(48, 41, 225, 26);
 		itemPanel.add(cbItems);
 		item.parseItemList();
 		for (int i=0; i<item.itemList.length; i++)
 			cbItems.addItem(item.itemList[i]);
 		
 		JTextField tf_itemNum = new JTextField();
-		tf_itemNum.setBounds(295, 31, 85, 26);
+		tf_itemNum.setBounds(328, 41, 85, 26);
 		tf_itemNum.setText("0");
 		tf_itemNum.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -505,7 +523,7 @@ public class View2 {
 				}
 			}
 		});
-		btn_add_item.setBounds(166, 77, 117, 29);
+		btn_add_item.setBounds(178, 100, 117, 29);
 		itemPanel.add(btn_add_item);
 		
 		JButton btn_DashG = new JButton("强走药Gx99");
@@ -517,7 +535,7 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_DashG.setBounds(48, 154, 117, 29);
+		btn_DashG.setBounds(60, 181, 117, 29);
 		itemPanel.add(btn_DashG);
 		
 		JButton btn_MaxPotion = new JButton("秘药x99");
@@ -529,7 +547,7 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_MaxPotion.setBounds(166, 154, 117, 29);
+		btn_MaxPotion.setBounds(178, 181, 117, 29);
 		itemPanel.add(btn_MaxPotion);
 		
 		JButton btn_AnciPotion = new JButton("古代秘药x99");
@@ -541,7 +559,7 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_AnciPotion.setBounds(284, 154, 117, 29);
+		btn_AnciPotion.setBounds(296, 181, 117, 29);
 		itemPanel.add(btn_AnciPotion);
 		
 		JButton btn_DemonG = new JButton("鬼人药Gx99");
@@ -553,7 +571,7 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_DemonG.setBounds(48, 184, 117, 29);
+		btn_DemonG.setBounds(60, 211, 117, 29);
 		itemPanel.add(btn_DemonG);
 		
 		JButton btn_LifeDustG = new JButton("生命大粉尘x99");
@@ -565,7 +583,7 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_LifeDustG.setBounds(166, 184, 117, 29);
+		btn_LifeDustG.setBounds(178, 211, 117, 29);
 		itemPanel.add(btn_LifeDustG);
 		
 		JButton btnx = new JButton("素材玉x99");
@@ -577,11 +595,11 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btnx.setBounds(284, 184, 117, 29);
+		btnx.setBounds(296, 211, 117, 29);
 		itemPanel.add(btnx);
 		
 		JLabel label = new JLabel("快速添加物品：");
-		label.setBounds(56, 133, 117, 16);
+		label.setBounds(60, 153, 117, 16);
 		itemPanel.add(label);
 
 		
@@ -590,22 +608,22 @@ public class View2 {
 		//<-------------------------------------------------Talisman Panel-------------------------------------------------->//
 		//JAutoCompleteComboBox cbType = new JAutoCompleteComboBox();
 		JComboBox cbType = new JComboBox();
-		cbType.setBounds(199, 38, 123, 27);
+		cbType.setBounds(136, 27, 145, 27);
 		talismanPanel.add(cbType);
 		cbType.setModel(new DefaultComboBoxModel(talisman.tType.values()));
 		
 		JAutoCompleteComboBox cbSkill1 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill1 = new JComboBox();
-		cbSkill1.setBounds(148, 77, 123, 27);
+		cbSkill1.setBounds(112, 77, 123, 27);
 		talismanPanel.add(cbSkill1);
 		
 		JAutoCompleteComboBox cbSkill2 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill2 = new JComboBox();
-		cbSkill2.setBounds(148, 116, 123, 27);
+		cbSkill2.setBounds(112, 127, 123, 27);
 		talismanPanel.add(cbSkill2);
 		
 		JComboBox txtSkill1Num = new JComboBox();
-		txtSkill1Num.setBounds(295, 76, 78, 26);
+		txtSkill1Num.setBounds(242, 78, 78, 26);
 		talismanPanel.add(txtSkill1Num);
 		for (int i=-10; i<15; i++){
 			txtSkill1Num.addItem(i);
@@ -614,7 +632,7 @@ public class View2 {
 		
 				
 		JComboBox txtSkill2Num = new JComboBox();
-		txtSkill2Num.setBounds(295, 115, 78, 26);
+		txtSkill2Num.setBounds(242, 128, 78, 26);
 		talismanPanel.add(txtSkill2Num);
 		for (int i=-10; i<15; i++){
 			txtSkill2Num.addItem(i);
@@ -623,7 +641,7 @@ public class View2 {
 		
 		
 		JComboBox cbSlot = new JComboBox();
-		cbSlot.setBounds(148, 154, 61, 27);
+		cbSlot.setBounds(112, 180, 61, 27);
 		talismanPanel.add(cbSlot);
 		
 		for (int i=0; i<204; i++){
@@ -637,19 +655,19 @@ public class View2 {
 		}
 						
 		JLabel lblSkill1 = new JLabel("技能1");
-		lblSkill1.setBounds(75, 81, 61, 16);
+		lblSkill1.setBounds(53, 82, 61, 16);
 		talismanPanel.add(lblSkill1);
 		
 		JLabel lblSkill2 = new JLabel("技能2");
-		lblSkill2.setBounds(75, 120, 61, 16);
+		lblSkill2.setBounds(53, 132, 61, 16);
 		talismanPanel.add(lblSkill2);
 		
 		JLabel lblSlot = new JLabel("孔数");
-		lblSlot.setBounds(75, 158, 61, 16);
+		lblSlot.setBounds(53, 184, 61, 16);
 		talismanPanel.add(lblSlot);
 		
 		JLabel lblType = new JLabel("护石类型：");
-		lblType.setBounds(75, 42, 71, 16);
+		lblType.setBounds(53, 31, 71, 16);
 		talismanPanel.add(lblType);
 		
 		JButton btnAddtalisman = new JButton("快速添加护石");
@@ -688,7 +706,7 @@ public class View2 {
 				
 			}
 		});
-		btnAddtalisman.setBounds(256, 193, 117, 29);
+		btnAddtalisman.setBounds(295, 223, 117, 29);
 		talismanPanel.add(btnAddtalisman);
 		
 		
@@ -696,7 +714,7 @@ public class View2 {
 		JTextPane textPane = new JTextPane();
 		textPane.setBackground(UIManager.getColor("Panel.background"));
 		textPane.setText("使用说明\n1. 请将防具按照(本体,幻化外形)为一组放在第一个箱子的第一行；\n2. 可以幻化二名DLC等防具，射手剑士装可以互相幻化；\n3. 此幻化后，偶数位的防具还在。");
-		textPane.setBounds(19, 163, 397, 87);
+		textPane.setBounds(46, 188, 397, 87);
 		visionPanel.add(textPane);
 		
 		JButton vision1 = new JButton("将第1格防具幻化为第2格防具的外形");
@@ -717,7 +735,7 @@ public class View2 {
 				}
 			}
 		});
-		vision1.setBounds(92, 16, 266, 29);
+		vision1.setBounds(107, 27, 266, 29);
 		visionPanel.add(vision1);
 		
 		JButton vision2 = new JButton("将第3格防具幻化为第4格防具的外形");
@@ -738,7 +756,7 @@ public class View2 {
 				}
 			}
 		});
-		vision2.setBounds(92, 46, 266, 29);
+		vision2.setBounds(107, 57, 266, 29);
 		visionPanel.add(vision2);
 		
 		JButton vision3 = new JButton("将第5格防具幻化为第6格防具的外形");
@@ -759,7 +777,7 @@ public class View2 {
 				}
 			}
 		});
-		vision3.setBounds(92, 76, 266, 29);
+		vision3.setBounds(107, 87, 266, 29);
 		visionPanel.add(vision3);
 		
 		JButton vision4 = new JButton("将第7格防具幻化为第8格防具的外形");
@@ -780,7 +798,7 @@ public class View2 {
 				}
 			}
 		});
-		vision4.setBounds(92, 106, 266, 29);
+		vision4.setBounds(107, 117, 266, 29);
 		visionPanel.add(vision4);
 		
 		JButton vision5 = new JButton("将第9格防具幻化为第10格防具的外形");
@@ -801,7 +819,7 @@ public class View2 {
 				}
 			}
 		});
-		vision5.setBounds(92, 136, 266, 29);
+		vision5.setBounds(107, 147, 266, 29);
 		visionPanel.add(vision5);
 
 	}
