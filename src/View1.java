@@ -90,7 +90,7 @@ public class View1 {
 					    View2.main();;
 					}
 				}catch(Exception exc){
-					JOptionPane.showMessageDialog(null, "请加载正确的存档文件System");
+					JOptionPane.showMessageDialog(null, "加载失败\n" + exc.getMessage());
 				}
 			}
 		});

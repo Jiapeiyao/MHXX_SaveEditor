@@ -278,8 +278,8 @@ public class View2 {
 		toolBar.add(button_4);
 		
 		JButton button_5 = new JButton("保存");
-		button_5.setBackground(Color.GRAY);
-		button_5.setForeground(new Color(220, 20, 60));
+		button_5.setBackground(new Color(169, 169, 169));
+		button_5.setForeground(new Color(165, 42, 42));
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		//JFileChooser f = new JFileChooser();
 		button_5.addActionListener(new ActionListener() {
@@ -298,7 +298,7 @@ public class View2 {
 					
 					
 				}catch(Exception exc){
-					JOptionPane.showMessageDialog(null, "保存失败");
+					JOptionPane.showMessageDialog(null, "保存失败\n" + exc.getMessage());
 				}
 			}
 		});
