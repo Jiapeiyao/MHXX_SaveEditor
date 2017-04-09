@@ -93,6 +93,8 @@ class   AutoCompleter   implements   KeyListener,   ItemListener   {
                 String   str   =   editor.getText(); 
                 if   (str.length()   ==   0) 
                 return;
+                if (isEnglishOrNumber(str.charAt(0)) == true)
+                	return;
                 if (isChinese(str) == false)
                 	return;
                 autoComplete(str,   caretPosition); 
@@ -109,6 +111,12 @@ class   AutoCompleter   implements   KeyListener,   ItemListener   {
     				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION) {
     			return true;
     		}
+    		return false;
+    	}
+        
+        private static boolean isEnglishOrNumber(char c) {
+        	if ((c>='A' && c<='Z') || (c>='a' && c<='z') || (c>='0' && c<= '9'))
+        		return true;
     		return false;
     	}
         
