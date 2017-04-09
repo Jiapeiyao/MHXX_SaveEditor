@@ -42,6 +42,8 @@ public class View2 {
 	private JTextField tf_AP;
 	private JComboBox cb_voice;
 	private JComboBox<String> cb_gender;
+	JAutoCompleteComboBox cbSkill1;
+	JAutoCompleteComboBox cbSkill2;
 
 	/**
 	 * Launch the application.
@@ -478,14 +480,14 @@ public class View2 {
 		
 		//<--------------------------------------------------item Panel--------------------------------------------------->//
 		JAutoCompleteComboBox cbItems = new JAutoCompleteComboBox();
-		cbItems.setBounds(48, 41, 225, 26);
+		cbItems.setBounds(48, 41, 296, 26);
 		itemPanel.add(cbItems);
 		item.parseItemList();
 		for (int i=0; i<item.itemList.length; i++)
 			cbItems.addItem(item.itemList[i]);
 		
 		JTextField tf_itemNum = new JTextField();
-		tf_itemNum.setBounds(328, 41, 85, 26);
+		tf_itemNum.setBounds(350, 41, 91, 26);
 		tf_itemNum.setText("0");
 		tf_itemNum.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) {
@@ -525,10 +527,10 @@ public class View2 {
 				}
 			}
 		});
-		btn_add_item.setBounds(178, 100, 117, 29);
+		btn_add_item.setBounds(178, 79, 117, 29);
 		itemPanel.add(btn_add_item);
 		
-		JButton btn_DashG = new JButton("强走药Gx99");
+		JButton btn_DashG = new JButton("强走药G");
 		btn_DashG.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (item.addItemToBox(16, 99)) {
@@ -537,10 +539,10 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_DashG.setBounds(60, 181, 117, 29);
+		btn_DashG.setBounds(45, 153, 100, 29);
 		itemPanel.add(btn_DashG);
 		
-		JButton btn_MaxPotion = new JButton("秘药x99");
+		JButton btn_MaxPotion = new JButton("秘药");
 		btn_MaxPotion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (item.addItemToBox(28, 99)) {
@@ -549,10 +551,10 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_MaxPotion.setBounds(178, 181, 117, 29);
+		btn_MaxPotion.setBounds(145, 153, 100, 29);
 		itemPanel.add(btn_MaxPotion);
 		
-		JButton btn_AnciPotion = new JButton("古代秘药x99");
+		JButton btn_AnciPotion = new JButton("古代秘药");
 		btn_AnciPotion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (item.addItemToBox(29, 99)) {
@@ -561,10 +563,10 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_AnciPotion.setBounds(296, 181, 117, 29);
+		btn_AnciPotion.setBounds(245, 153, 100, 29);
 		itemPanel.add(btn_AnciPotion);
 		
-		JButton btn_DemonG = new JButton("鬼人药Gx99");
+		JButton btn_DemonG = new JButton("鬼人药G");
 		btn_DemonG.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (item.addItemToBox(18, 99)) {
@@ -573,10 +575,10 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_DemonG.setBounds(60, 211, 117, 29);
+		btn_DemonG.setBounds(345, 153, 100, 29);
 		itemPanel.add(btn_DemonG);
 		
-		JButton btn_LifeDustG = new JButton("生命大粉尘x99");
+		JButton btn_LifeDustG = new JButton("生命大粉尘");
 		btn_LifeDustG.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (item.addItemToBox(32, 99)) {
@@ -585,24 +587,96 @@ public class View2 {
 				item.rewriteItemBox();
 			}
 		});
-		btn_LifeDustG.setBounds(178, 211, 117, 29);
+		btn_LifeDustG.setBounds(45, 182, 100, 29);
 		itemPanel.add(btn_LifeDustG);
 		
-		JButton btnx = new JButton("素材玉x99");
-		btnx.addActionListener(new ActionListener() {
+		JButton btnNitroshroom = new JButton("硝化蘑");
+		btnNitroshroom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (item.addItemToBox(69, 99)) {
+				if (item.addItemToBox(293, 99)) {
 					JOptionPane.showMessageDialog(null, "添加成功！");
 				}
 				item.rewriteItemBox();
 			}
 		});
-		btnx.setBounds(296, 211, 117, 29);
-		itemPanel.add(btnx);
+		btnNitroshroom.setBounds(145, 182, 100, 29);
+		itemPanel.add(btnNitroshroom);
 		
-		JLabel label = new JLabel("快速添加物品：");
-		label.setBounds(60, 153, 117, 16);
-		itemPanel.add(label);
+		JLabel lblx = new JLabel("快速添加物品(+99)：");
+		lblx.setBounds(60, 125, 136, 16);
+		itemPanel.add(lblx);
+		
+		JButton btnPierceBerry = new JButton("贯一果");
+		btnPierceBerry.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(309, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnPierceBerry.setBounds(145, 211, 100, 29);
+		itemPanel.add(btnPierceBerry);
+		
+		JButton btnPierceFang = new JButton("贯二牙");
+		btnPierceFang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(571, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnPierceFang.setBounds(245, 211, 100, 29);
+		itemPanel.add(btnPierceFang);
+		
+		JButton btnMightSeed = new JButton("怪力种子");
+		btnMightSeed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(303, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnMightSeed.setBounds(45, 211, 100, 29);
+		itemPanel.add(btnMightSeed);
+		
+		JButton btnPierceFish = new JButton("贯三鱼");
+		btnPierceFish.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(365, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnPierceFish.setBounds(345, 211, 100, 29);
+		itemPanel.add(btnPierceFish);
+		
+		JButton btnBoneHusk = new JButton("弹壳骨");
+		btnBoneHusk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(99, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnBoneHusk.setBounds(345, 182, 100, 29);
+		itemPanel.add(btnBoneHusk);
+		
+		JButton btnHuskBerry = new JButton("弹壳果");
+		btnHuskBerry.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (item.addItemToBox(98, 99)) {
+					JOptionPane.showMessageDialog(null, "添加成功！");
+				}
+				item.rewriteItemBox();
+			}
+		});
+		btnHuskBerry.setBounds(245, 182, 100, 29);
+		itemPanel.add(btnHuskBerry);
 
 		
 		
@@ -627,6 +701,8 @@ public class View2 {
 		            	} else if (cbType.getSelectedIndex()>7 && cbType.getSelectedIndex()<=10){
 		            		tsm.selectedTalismanRarityType = 4;
 		            	}
+		            	cbSkill1.setSelectedItem(cbSkill1.getSelectedItem());
+		            	cbSkill2.setSelectedItem(cbSkill2.getSelectedItem());
 		            }
 
 		        }
@@ -635,7 +711,7 @@ public class View2 {
 		cbType.setBounds(167, 27, 145, 27);
 		talismanPanel.add(cbType);
 	
-		JAutoCompleteComboBox cbSkill1 = new JAutoCompleteComboBox();
+		cbSkill1 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill1 = new JComboBox();
 		for (int i=0; i<204; i++) {
 			cbSkill1.addItem(tsm.skill1LimitTable[i]);
@@ -643,13 +719,14 @@ public class View2 {
 		cbSkill1.setBounds(112, 77, 236, 27);
 		talismanPanel.add(cbSkill1);
 		
-		JAutoCompleteComboBox cbSkill2 = new JAutoCompleteComboBox();
+		cbSkill2 = new JAutoCompleteComboBox();
 		//JComboBox cbSkill2 = new JComboBox();
 		for (int i=0; i<204; i++){
 			cbSkill2.addItem(tsm.skill2LimitTable[i]);
 		}
 		cbSkill2.setBounds(112, 127, 236, 27);
 		talismanPanel.add(cbSkill2);
+		
 		
 		JComboBox<Integer> txtSkill1Num = new JComboBox<Integer>();
 		txtSkill1Num.setBounds(360, 78, 78, 26);

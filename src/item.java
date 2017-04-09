@@ -4,7 +4,7 @@ public class item {
 	public static String[] itemList; 
 	public static itemSpace[] itemBox = new itemSpace[2300];
 	public static int emptySpaceInItemBox;
-	public static String inputString = "(选择物品)\n調合書①入門編\n調合書②初級編\n調合書③中級編\n調合書④上級編\n"
+	public static String inputString = "(选择物品,可输入第一个繁体汉字搜索)\n調合書①入門編\n調合書②初級編\n調合書③中級編\n調合書④上級編\n"
 			+ "調合書⑤達人編\n収納上手・技の書\n収納上手・力の書\n双眼鏡\n回復薬\n回復薬グレート\n栄養剤\n栄養剤グレート\n"
 			+ "解毒薬\n活力剤\n強走薬\n強走薬グレート\n鬼人薬\n鬼人薬グレート\n怪力の丸薬\n硬化薬\n硬化薬グレート\n"
 			+ "忍耐の丸薬\nクーラードリンク\nホットドリンク\n消散剤\n千里眼の薬\n漢方薬\n秘薬\nいにしえの秘薬\n元気ドリンコ\n"
