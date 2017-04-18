@@ -53,7 +53,7 @@ public class View1 {
 		frame = new JFrame();
 		frame.setBounds(100, 100, Main.windowWidth, Main.windowHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("MHXX存档修改器v0.4b by Mononoke");
+		frame.setTitle("MHXX存档修改器v0.4c by Mononoke");
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblWelcome = new JLabel("欢迎使用MHXX存档修改器");

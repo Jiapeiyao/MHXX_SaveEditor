@@ -95,8 +95,8 @@ class   AutoCompleter   implements   KeyListener,   ItemListener   {
                 return;
                 if (isEnglishOrNumber(str.charAt(0)) == true)
                 	return;
-                if (isChinese(str) == false)
-                	return;
+//                if (isChinese(str) == false)
+//                	return;
                 autoComplete(str,   caretPosition); 
         } 
         

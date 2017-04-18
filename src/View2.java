@@ -41,6 +41,7 @@ public class View2 {
 	private JTextField tf_HR;
 	private JTextField tf_AP;
 	private JComboBox cb_voice;
+	private JComboBox cb_face;
 	private JComboBox<String> cb_gender;
 	JAutoCompleteComboBox cbSkill1;
 	JAutoCompleteComboBox cbSkill2;
@@ -77,6 +78,7 @@ public class View2 {
 		tf_AP.setText(""+getAP());
 		cb_voice.setSelectedIndex(getVoice());
 		cb_gender.setSelectedIndex(getGender());
+		cb_face.setSelectedIndex(getFace());
 	}
 	
 	public String getHunterName(){
@@ -203,6 +205,15 @@ public class View2 {
 	public void setVoice(int i){
 		Main.buffer[Main.useroffset + 577] = (byte)(i+1);
 		Main.buffer[Main.useroffset + 146248] = (byte)(i+1);
+	}
+	
+	public int getFace(){
+		return (Main.buffer[Main.useroffset + 146254] & 0xff);
+	}
+	
+	public void setFace(int i){
+		Main.buffer[Main.useroffset + 583] = (byte)i;
+		Main.buffer[Main.useroffset + 146254] = (byte)i;
 	}
 
 	/**
@@ -362,9 +373,9 @@ public class View2 {
 		lbl_hn.setBounds(119, 23, 52, 16);
 		otherPanel.add(lbl_hn);
 		
-		JLabel lbl_time = new JLabel("游戏时间：");
-		lbl_time.setBounds(250, 163, 71, 16);
-		otherPanel.add(lbl_time);
+		JLabel lbl_face = new JLabel("脸型：");
+		lbl_face.setBounds(250, 117, 71, 16);
+		otherPanel.add(lbl_face);
 		
 		JLabel lbl_money = new JLabel("金钱：");
 		lbl_money.setBounds(46, 117, 61, 16);
@@ -375,7 +386,7 @@ public class View2 {
 		otherPanel.add(lbl_HR);
 		
 		JLabel lbl_AP = new JLabel("农场点：");
-		lbl_AP.setBounds(250, 117, 61, 16);
+		lbl_AP.setBounds(250, 163, 61, 16);
 		otherPanel.add(lbl_AP);
 		
 		JLabel lbl_sound = new JLabel("声音：");
@@ -442,7 +453,7 @@ public class View2 {
 		        }
 		      }
 		    });
-		tf_AP.setBounds(310, 112, 109, 26);
+		tf_AP.setBounds(310, 158, 109, 26);
 		tf_AP.setText(""+getAP());
 		otherPanel.add(tf_AP);
 		tf_AP.setColumns(10);
@@ -477,6 +488,14 @@ public class View2 {
 		});
 		btn_apply.setBounds(150, 196, 179, 56);
 		otherPanel.add(btn_apply);
+		
+		cb_face = new JComboBox();
+		cb_face.setBounds(310, 113, 109, 27);
+		for (int i=1; i<=18; i++){
+			cb_face.addItem(""+i);
+		}
+		cb_face.setSelectedIndex(getFace());
+		otherPanel.add(cb_face);
 		
 		//<--------------------------------------------------item Panel--------------------------------------------------->//
 		JAutoCompleteComboBox cbItems = new JAutoCompleteComboBox();
