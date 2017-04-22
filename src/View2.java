@@ -267,6 +267,8 @@ public class View2 {
 		
 		talisman tsm = new talisman();
 		
+		
+		//<---------------------------------------------ToolBar---------------------------------------------->//
 		button_0 = new JButton("综合");
 		button_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -275,7 +277,7 @@ public class View2 {
 		});
 		button_0.setEnabled(false);
 		
-		button_3 = new JButton("载入存档");
+		button_3 = new JButton("打开");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -379,17 +381,8 @@ public class View2 {
 		});
 		button_4.setEnabled(false);
 		
-		toolBar.add(button_3);
-		toolBar.add(button_5);
-		toolBar.add(button_0);
-		toolBar.add(button_1);
-		toolBar.add(button_2);
-		toolBar.add(button_6);
-		toolBar.add(button_4);
-		
-		
 		//UserX Radio Buttons
-		rdbtnUser_1 = new JRadioButton("User1");
+		rdbtnUser_1 = new JRadioButton("存档1");
 		rdbtnUser_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user1offset;
@@ -398,9 +391,8 @@ public class View2 {
 		});
 		userBtnGroup.add(rdbtnUser_1);
 		rdbtnUser_1.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		toolBar.add(rdbtnUser_1);
 		
-		rdbtnUser_2 = new JRadioButton("User2");
+		rdbtnUser_2 = new JRadioButton("存档2");
 		rdbtnUser_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user2offset;
@@ -409,9 +401,8 @@ public class View2 {
 		});
 		userBtnGroup.add(rdbtnUser_2);
 		rdbtnUser_2.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		toolBar.add(rdbtnUser_2);
 		
-		rdbtnUser_3 = new JRadioButton("User3");
+		rdbtnUser_3 = new JRadioButton("存档3");
 		rdbtnUser_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user3offset;
@@ -420,12 +411,22 @@ public class View2 {
 		});
 		userBtnGroup.add(rdbtnUser_3);
 		rdbtnUser_3.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
-		toolBar.add(rdbtnUser_3);
 		
 		rdbtnUser_1.setEnabled(false);
 		rdbtnUser_2.setEnabled(false);
 		rdbtnUser_3.setEnabled(false);
 		rdbtnUser_1.setSelected(true);
+		
+		toolBar.add(button_3);
+		toolBar.add(button_5);
+		toolBar.add(rdbtnUser_1);
+		toolBar.add(rdbtnUser_2);
+		toolBar.add(rdbtnUser_3);
+		toolBar.add(button_0);
+		toolBar.add(button_1);
+		toolBar.add(button_2);
+		toolBar.add(button_6);
+		toolBar.add(button_4);
 		
 		//<-----------------------------------------------------otherPanel--------------------------------------------------------------------->//
 		
