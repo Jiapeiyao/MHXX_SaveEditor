@@ -19,6 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -29,6 +30,7 @@ import java.awt.Font;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -45,6 +47,16 @@ public class View2 {
 	private JComboBox<String> cb_gender;
 	JAutoCompleteComboBox cbSkill1;
 	JAutoCompleteComboBox cbSkill2;
+	JButton button_0;
+	JButton button_1;
+	JButton button_2;
+	JButton button_3;
+	JButton button_4;
+	JButton button_5;
+	JButton button_6;
+	JRadioButton rdbtnUser_1;
+	JRadioButton rdbtnUser_2;
+	JRadioButton rdbtnUser_3;
 
 	/**
 	 * Launch the application.
@@ -214,6 +226,7 @@ public class View2 {
 	public void setFace(int i){
 		Main.buffer[Main.useroffset + 583] = (byte)i;
 		Main.buffer[Main.useroffset + 146254] = (byte)i;
+		Main.buffer[Main.useroffset + 815580] = (byte)i;
 	}
 
 	/**
@@ -253,45 +266,66 @@ public class View2 {
 		
 		
 		talisman tsm = new talisman();
-		JButton button_0 = new JButton("综合");
+		
+		button_0 = new JButton("综合");
 		button_0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cards.show(container, "other");
 			}
 		});
-		toolBar.add(button_0);
+		button_0.setEnabled(false);
 		
-		JButton button_1 = new JButton("物品");
-		button_1.addActionListener(new ActionListener() {
+		button_3 = new JButton("载入存档");
+		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "item");
-				item.getItemBox();
+				try {
+					Main.f.setDialogTitle("打开存档文件");
+					int openResult = Main.f.showOpenDialog(null);
+					if (openResult == JFileChooser.APPROVE_OPTION) {
+						File file = Main.f.getSelectedFile();
+						FileInputStream in = new FileInputStream(file.getPath());
+						in.read(Main.buffer);
+					    in.close();
+					    Main.user1offset = (Main.buffer[18] & 0xff)*16*16*16*16 + (Main.buffer[17] & 0xff)*16*16 + (Main.buffer[16] & 0xff);
+					    Main.user2offset = (Main.buffer[22] & 0xff)*16*16*16*16 + (Main.buffer[21] & 0xff)*16*16 + (Main.buffer[20] & 0xff);
+					    Main.user3offset = (Main.buffer[26] & 0xff)*16*16*16*16 + (Main.buffer[25] & 0xff)*16*16 + (Main.buffer[24] & 0xff);
+					    Main.useroffset = Main.user1offset;
+					    reload();
+					    button_0.setEnabled(true);
+					    button_1.setEnabled(true);
+					    //button_2.setEnabled(true);
+					    button_4.setEnabled(true);
+					    button_5.setEnabled(true);
+					    button_6.setEnabled(true);
+					    for (Component c : otherPanel.getComponents()){
+							c.setEnabled(true);
+						}
+					    if ((int)Main.buffer[4] == 0){
+							rdbtnUser_1.setEnabled(false);
+						} else {
+							rdbtnUser_1.setEnabled(true);
+						}
+					    if ((int)Main.buffer[5] == 0){
+							rdbtnUser_2.setEnabled(false);
+						} else {
+							rdbtnUser_2.setEnabled(true);
+						}
+					    if ((int)Main.buffer[6] == 0){
+							rdbtnUser_3.setEnabled(false);
+						} else {
+							rdbtnUser_3.setEnabled(true);
+						}
+
+					}
+				}catch(Exception exc){
+					JOptionPane.showMessageDialog(null, "加载失败\n" + exc.getMessage());
+				}
 			}
 		});
-		toolBar.add(button_1);
+		button_3.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		
-		JButton button_2 = new JButton("装备");
-		button_2.setEnabled(false);
-		toolBar.add(button_2);
-		
-		JButton button_6 = new JButton("幻化");
-		button_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "vision");
-			}
-		});
-		toolBar.add(button_6);
-		
-		JButton button_4 = new JButton("护石");
-		button_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "talisman");
-			}
-		});
-		toolBar.add(button_4);
-		
-		JButton button_5 = new JButton("保存");
-		button_5.setBackground(new Color(169, 169, 169));
+		button_5 = new JButton("保存");
+		button_5.setBackground(UIManager.getColor("Button.background"));
 		button_5.setForeground(new Color(165, 42, 42));
 		button_5.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		//JFileChooser f = new JFileChooser();
@@ -315,18 +349,47 @@ public class View2 {
 				}
 			}
 		});
+		button_5.setEnabled(false);
 		
-		JButton button_3 = new JButton("存档复制");
-		button_3.setEnabled(false);
+		button_1 = new JButton("物品");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cards.show(container, "item");
+				item.getItemBox();
+			}
+		});
+		button_1.setEnabled(false);
+		
+		button_2 = new JButton("装备");
+		button_2.setEnabled(false);
+		
+		button_6 = new JButton("幻化");
+		button_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cards.show(container, "vision");
+			}
+		});
+		button_6.setEnabled(false);
+		
+		button_4 = new JButton("护石");
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cards.show(container, "talisman");
+			}
+		});
+		button_4.setEnabled(false);
+		
 		toolBar.add(button_3);
 		toolBar.add(button_5);
+		toolBar.add(button_0);
+		toolBar.add(button_1);
+		toolBar.add(button_2);
+		toolBar.add(button_6);
+		toolBar.add(button_4);
 		
 		
 		//UserX Radio Buttons
-		JRadioButton rdbtnUser_1 = new JRadioButton("User1");
-		if ((int)Main.buffer[4] == 0){
-			rdbtnUser_1.setEnabled(false);
-		}
+		rdbtnUser_1 = new JRadioButton("User1");
 		rdbtnUser_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user1offset;
@@ -337,10 +400,7 @@ public class View2 {
 		rdbtnUser_1.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		toolBar.add(rdbtnUser_1);
 		
-		JRadioButton rdbtnUser_2 = new JRadioButton("User2");
-		if ((int)Main.buffer[5] == 0){
-			rdbtnUser_2.setEnabled(false);
-		}
+		rdbtnUser_2 = new JRadioButton("User2");
 		rdbtnUser_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user2offset;
@@ -351,10 +411,7 @@ public class View2 {
 		rdbtnUser_2.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		toolBar.add(rdbtnUser_2);
 		
-		JRadioButton rdbtnUser_3 = new JRadioButton("User3");
-		if ((int)Main.buffer[6] == 0){
-			rdbtnUser_3.setEnabled(false);
-		}
+		rdbtnUser_3 = new JRadioButton("User3");
 		rdbtnUser_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Main.useroffset = Main.user3offset;
@@ -365,6 +422,9 @@ public class View2 {
 		rdbtnUser_3.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		toolBar.add(rdbtnUser_3);
 		
+		rdbtnUser_1.setEnabled(false);
+		rdbtnUser_2.setEnabled(false);
+		rdbtnUser_3.setEnabled(false);
 		rdbtnUser_1.setSelected(true);
 		
 		//<-----------------------------------------------------otherPanel--------------------------------------------------------------------->//
@@ -473,8 +533,8 @@ public class View2 {
 		cb_voice.setBounds(310, 68, 109, 27);
 		otherPanel.add(cb_voice);
 		
-		JButton btn_apply = new JButton("应用");
-		btn_apply.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		JButton btn_apply = new JButton("应用本页修改");
+		btn_apply.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		btn_apply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
 				setHunterName(tf_hunterName.getText());
@@ -483,10 +543,11 @@ public class View2 {
 				setHR(Integer.parseInt(tf_HR.getText())%1000);
 				setGender(cb_gender.getSelectedIndex());
 				setVoice(cb_voice.getSelectedIndex());
+				setFace(cb_face.getSelectedIndex());
 				JOptionPane.showMessageDialog(null, "不要忘记按右上角保存哦");
 			}
 		});
-		btn_apply.setBounds(150, 196, 179, 56);
+		btn_apply.setBounds(46, 206, 373, 46);
 		otherPanel.add(btn_apply);
 		
 		cb_face = new JComboBox();
@@ -496,6 +557,11 @@ public class View2 {
 		}
 		cb_face.setSelectedIndex(getFace());
 		otherPanel.add(cb_face);
+		
+		for (Component c : otherPanel.getComponents()){
+			c.setEnabled(false);
+		}
+		
 		
 		//<--------------------------------------------------item Panel--------------------------------------------------->//
 		JAutoCompleteComboBox cbItems = new JAutoCompleteComboBox();
@@ -785,6 +851,7 @@ public class View2 {
 		talismanPanel.add(lblType);
 		
 		JButton btnAddtalisman = new JButton("添加护石");
+		btnAddtalisman.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		btnAddtalisman.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int typeCode = cbType.getSelectedIndex();
@@ -815,7 +882,7 @@ public class View2 {
 				
 			}
 		});
-		btnAddtalisman.setBounds(320, 200, 118, 47);
+		btnAddtalisman.setBounds(224, 190, 214, 47);
 		talismanPanel.add(btnAddtalisman);
 		
 		

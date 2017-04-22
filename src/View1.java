@@ -53,7 +53,7 @@ public class View1 {
 		frame = new JFrame();
 		frame.setBounds(100, 100, Main.windowWidth, Main.windowHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setTitle("MHXX存档修改器v0.4c by Mononoke");
+		frame.setTitle("MHXX存档修改器v0.5a by Mononoke");
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblWelcome = new JLabel("欢迎使用MHXX存档修改器");
@@ -67,31 +67,13 @@ public class View1 {
 		lblStatement.setVisible(true);
 		frame.getContentPane().add(lblStatement);
 		
-		JButton btnLoad = new JButton("加载存档");
+		JButton btnLoad = new JButton("开始修改");
+		btnLoad.setFont(new Font("Lucida Grande", Font.BOLD, 14));
 		//JFileChooser f = new JFileChooser();
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					Main.f.setDialogTitle("打开存档文件");
-					int openResult = Main.f.showOpenDialog(null);
-					if (openResult == JFileChooser.APPROVE_OPTION) {
-						File file = Main.f.getSelectedFile();
-						FileInputStream in = new FileInputStream(file.getPath());
-						in.read(Main.buffer);
-					    in.close();
-					    Main.user1offset = (Main.buffer[18] & 0xff)*16*16*16*16 + (Main.buffer[17] & 0xff)*16*16 + (Main.buffer[16] & 0xff);
-					    Main.user2offset = (Main.buffer[22] & 0xff)*16*16*16*16 + (Main.buffer[21] & 0xff)*16*16 + (Main.buffer[20] & 0xff);
-//					    System.out.println((int)Main.buffer[26] & 0xff);
-//					    System.out.println((int)Main.buffer[25] & 0xff);
-//					    System.out.println((int)Main.buffer[24] & 0xff);
-					    Main.user3offset = (Main.buffer[26] & 0xff)*16*16*16*16 + (Main.buffer[25] & 0xff)*16*16 + (Main.buffer[24] & 0xff);
-					    Main.useroffset = Main.user1offset;
-					    frame.setVisible(false);
-					    View2.main();;
-					}
-				}catch(Exception exc){
-					JOptionPane.showMessageDialog(null, "加载失败\n" + exc.getMessage());
-				}
+				frame.setVisible(false);
+				View2.main();
 			}
 		});
 		btnLoad.setBounds(123, 126, 234, 56);
