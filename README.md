@@ -14,10 +14,10 @@
 4. 同一系列的防具幻化效果相同（例：麒麟S射手胴可以将所有部位的防具幻化成麒麟S射手套的样式）
 
 运行：<br />
-1. 下载安装Java Jre8: http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+1. 下载安装Java Jre8: https://www.java.com/zh_CN/download/ 或者 http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html 
 2. 设置好运行环境：<br />
     a) 右键“我的电脑”，点“属性(R)”，点“高级系统设置”，点“环境变量(N)”;<br />
-    b) 如果变量有path或PATH了（没有就新建），点开在最后添加“[java安装目录]/bin”, []中填你的java的安装目录；<br />
+    b) 如果变量有path或PATH了（没有就新建），点开在最后添加“;[java安装目录]/bin”, []中填你的java的安装目录；<br />
 
 常见问题：<br />
 Q: 为什么修改后没有效果？<br />
